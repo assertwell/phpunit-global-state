@@ -1,0 +1,52 @@
+{
+    "name": "assertwell/phpunit-global-state",
+    "description": "Tools for safely manipulating global state in tests",
+    "keywords": [
+        "env",
+        "environment variables",
+        "phpunit",
+        "testing"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Steve Grunwell",
+            "homepage": "https://stevegrunwell.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/assertwell/phpunit-global-state/issues",
+        "source": "https://github.com/assertwell/phpunit-global-state/"
+    },
+    "require": {
+        "php": ">=7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "AssertWell\\PHPUnitGlobalState\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "scripts": {
+        "code-coverage": [
+            "phpdbg -qrr -d memory_limit=-1 ./vendor/bin/phpunit --colors=always --testdox --coverage-html=tests/coverage"
+        ]
+    },
+    "scripts-descriptions": {
+        "code-coverage": "Generate HTML code coverage reports in tests/coverage/."
+    }
+}

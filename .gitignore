@@ -1,0 +1,4 @@
+tests/coverage
+vendor
+.phpunit.result.cache
+.DS_Store

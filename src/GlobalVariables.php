@@ -47,7 +47,7 @@ trait GlobalVariables
     {
         if (! isset($GLOBALS[$variable])) {
             $this->globalVariables['created'][] = $variable;
-        } elseif (! isset( $this->backedUpGlobals['updated'][$variable])) {
+        } elseif (! isset($this->backedUpGlobals['updated'][$variable])) {
             $this->globalVariables['updated'][$variable] = $GLOBALS[$variable];
         }
 

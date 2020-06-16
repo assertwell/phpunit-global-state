@@ -58,3 +58,4 @@ Of course, we might want a constant's original value to be restored after our te
 The library offers a number of traits, based on the type of global state that might need to be manipulated.
 
 * [Environment Variables](docs/EnvironmentVariables.md)
+* [Global Variables](docs/GlobalVariables.md)

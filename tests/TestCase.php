@@ -4,6 +4,7 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use AssertWell\PHPUnitGlobalState\EnvironmentVariables;
+use AssertWell\PHPUnitGlobalState\GlobalVariables;
 
 /**
  * Since this test suite is testing a series of traits meant to aid in testing other codebases
@@ -15,4 +16,5 @@ use AssertWell\PHPUnitGlobalState\EnvironmentVariables;
 abstract class TestCase extends BaseTestCase
 {
     use EnvironmentVariables;
+    use GlobalVariables;
 }

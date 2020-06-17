@@ -25,11 +25,7 @@ trait EnvironmentVariables
     protected function resetEnvironmentVariables(): void
     {
         foreach ($this->_environmentVariables as $variable => $value) {
-            if (false === $value) {
-                putenv($variable);
-            } else {
-                putenv("${variable}=${value}");
-            }
+            putenv(false === $value ? $variable : "${variable}=${value}");
         }
     }
 
@@ -48,7 +44,9 @@ trait EnvironmentVariables
             $this->_environmentVariables[$variable] = getenv($variable);
         }
 
-        return null === $value ? putenv($variable) : putenv("${variable}=${value}");
+        putenv(null === $value ? $variable : "${variable}=${value}");
+
+        return $this;
     }
 
     /**

@@ -3,13 +3,15 @@
 namespace Tests;
 
 /**
- * @covers \AssertWell\PHPUnitGlobalState\GlobalVariablesTest
+ * @covers AssertWell\PHPUnitGlobalState\GlobalVariables
+ *
  * @group GlobalVariables
  */
 class GlobalVariablesTest extends TestCase
 {
     /**
      * @test
+     * @testdox setGlobalVariable() should be able to handle new global variables
      */
     public function setGlobalVariable_should_be_able_to_handle_new_global_variables(): void
     {
@@ -23,6 +25,7 @@ class GlobalVariablesTest extends TestCase
 
     /**
      * @test
+     * @testdox setGlobalVariable() should be able to handle redefined global variables
      */
     public function setGlobalVariable_should_be_able_to_handle_redefined_global_variables(): void
     {
@@ -36,6 +39,7 @@ class GlobalVariablesTest extends TestCase
 
     /**
      * @test
+     * @testdox setGlobalVariable() should be able to handle global variables that have been unset
      */
     public function setGlobalVariable_should_be_able_to_handle_unset_global_variables(): void
     {

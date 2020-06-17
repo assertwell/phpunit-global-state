@@ -35,7 +35,7 @@ jobs:
       run: composer install --prefer-dist --no-progress --no-suggest
 
     - name: Install Runkit7
-      run: sudo apt-get install -y php-pear && pecl install runkit7
+      run: sudo apt-get install -y php-pear && pecl install channel://pecl.php.net/runkit7-3.1.0a1
 
     - name: Run test suite
       run: composer test:unit

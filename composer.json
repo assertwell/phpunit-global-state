@@ -48,7 +48,8 @@
     },
     "scripts": {
         "test": [
-            "@test:unit"
+            "@test:unit",
+            "@test:standards"
         ],
         "test:coverage": [
             "phpdbg -qrr -d memory_limit=-1 ./vendor/bin/phpunit --colors=always --testdox --coverage-html=tests/coverage"

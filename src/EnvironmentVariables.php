@@ -9,14 +9,14 @@ trait EnvironmentVariables
      *
      * @var array
      */
-    private $environmentVariables;
+    private $_environmentVariables;
 
     /**
      * @before
      */
     protected function resetEnvironmentVariableRegistry(): void
     {
-        $this->environmentVariables = [];
+        $this->_environmentVariables = [];
     }
 
     /**
@@ -24,7 +24,7 @@ trait EnvironmentVariables
      */
     protected function resetEnvironmentVariables(): void
     {
-        foreach ($this->getEnvironmentVariables() as $variable => $value) {
+        foreach ($this->_environmentVariables as $variable => $value) {
             if (false === $value) {
                 putenv($variable);
             } else {
@@ -39,15 +39,16 @@ trait EnvironmentVariables
      * @see putenv()
      *
      * @param string $variable The environment variable name.
-     * @param mixed  $value    The value to store in the environment variable.
+     * @param mixed  $value    The value to store in the environment variable. Passing NULL will
+     *                         delete the environment variable.
      */
-    protected function setEnv(string $variable, $value = null): bool
+    protected function setEnvironmentVariable(string $variable, $value = null): self
     {
-        if (! isset($this->environmentVariables[$variable])) {
-            $this->environmentVariables[$variable] = getenv($variable);
+        if (! isset($this->_environmentVariables[$variable])) {
+            $this->_environmentVariables[$variable] = getenv($variable);
         }
 
-        return false === $value ? putenv($variable) : putenv("${variable}=${value}");
+        return null === $value ? putenv($variable) : putenv("${variable}=${value}");
     }
 
     /**
@@ -55,16 +56,8 @@ trait EnvironmentVariables
      *
      * @param string $variable The variable name.
      */
-    protected function deleteEnv(string $variable): bool
+    protected function deleteEnvironmentVariable(string $variable): self
     {
-        return $this->setEnv($variable, false);
-    }
-
-    /**
-     * Retrieve known environment variables.
-     */
-    protected function getEnvironmentVariables(): array
-    {
-        return $this->environmentVariables;
+        return $this->setEnvironmentVariable($variable, null);
     }
 }

@@ -18,7 +18,7 @@ class EnvironmentVariablesTest extends TestCase
         $this->setEnvironmentVariable('TEST_VAR', 'first');
         $this->assertSame('first', getenv('TEST_VAR'));
 
-        $this->resetEnvironmentVariables();
+        $this->restoreEnvironmentVariables();
         $this->assertFalse(getenv('TEST_VAR'), 'The TEST_VAR environment variable should have been deleted.');
     }
 
@@ -32,7 +32,7 @@ class EnvironmentVariablesTest extends TestCase
         $this->setEnvironmentVariable('TEST_VAR', 'second');
         $this->assertSame('second', getenv('TEST_VAR'));
 
-        $this->resetEnvironmentVariables();
+        $this->restoreEnvironmentVariables();
         $this->assertFalse(getenv('TEST_VAR'), 'The TEST_VAR environment variable should have been deleted.');
     }
 
@@ -47,7 +47,7 @@ class EnvironmentVariablesTest extends TestCase
         $this->setEnvironmentVariable('TEST_VAR', 'second');
         $this->assertSame('second', getenv('TEST_VAR'));
 
-        $this->resetEnvironmentVariables();
+        $this->restoreEnvironmentVariables();
         $this->assertSame('first', getenv('TEST_VAR'), 'The previous value of TEST_VAR should have been restored.');
     }
 
@@ -63,7 +63,7 @@ class EnvironmentVariablesTest extends TestCase
         $this->setEnvironmentVariable('TEST_VAR', 'third');
         $this->assertSame('third', getenv('TEST_VAR'));
 
-        $this->resetEnvironmentVariables();
+        $this->restoreEnvironmentVariables();
         $this->assertSame('first', getenv('TEST_VAR'), 'The initial value of TEST_VAR should have been restored.');
     }
 
@@ -78,7 +78,7 @@ class EnvironmentVariablesTest extends TestCase
         $this->deleteEnvironmentVariable('TEST_VAR');
         $this->assertFalse(getenv('TEST_VAR'));
 
-        $this->resetEnvironmentVariables();
+        $this->restoreEnvironmentVariables();
         $this->assertSame('first', getenv('TEST_VAR'), 'The initial value of TEST_VAR should have been restored.');
     }
 
@@ -94,7 +94,7 @@ class EnvironmentVariablesTest extends TestCase
         $this->setEnvironmentVariable('TEST_VAR', 'second');
         $this->assertSame('second', getenv('TEST_VAR'));
 
-        $this->resetEnvironmentVariables();
+        $this->restoreEnvironmentVariables();
         $this->assertSame('first', getenv('TEST_VAR'), 'The initial value of TEST_VAR should have been restored.');
     }
 }

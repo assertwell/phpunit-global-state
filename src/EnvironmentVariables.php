@@ -22,7 +22,7 @@ trait EnvironmentVariables
     /**
      * @after
      */
-    protected function resetEnvironmentVariables(): void
+    protected function restoreEnvironmentVariables(): void
     {
         foreach ($this->_environmentVariables as $variable => $value) {
             putenv(false === $value ? $variable : "${variable}=${value}");

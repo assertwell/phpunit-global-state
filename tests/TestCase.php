@@ -3,6 +3,7 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
+use AssertWell\PHPUnitGlobalState\Constants;
 use AssertWell\PHPUnitGlobalState\EnvironmentVariables;
 use AssertWell\PHPUnitGlobalState\GlobalVariables;
 
@@ -15,6 +16,7 @@ use AssertWell\PHPUnitGlobalState\GlobalVariables;
  */
 abstract class TestCase extends BaseTestCase
 {
+    use Constants;
     use EnvironmentVariables;
     use GlobalVariables;
 }

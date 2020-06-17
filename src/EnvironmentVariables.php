@@ -7,7 +7,7 @@ trait EnvironmentVariables
     /**
      * All environment variables being handled by this trait.
      *
-     * @var array
+     * @var mixed[]
      */
     private $_environmentVariables;
 

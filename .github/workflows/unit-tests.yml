@@ -15,7 +15,7 @@ jobs:
 
     - name: Validate composer.json and composer.lock
       run: composer validate
-      
+
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v2
@@ -25,9 +25,12 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-node-
 
-    - name: Install dependencies
+    - name: Install Composer dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest
+
+    - name: Install Runkit7
+      run: pecl install runkit7
 
     - name: Run test suite
       run: composer test:unit

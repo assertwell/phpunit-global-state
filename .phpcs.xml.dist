@@ -31,4 +31,9 @@
     <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
         <exclude-pattern>tests</exclude-pattern>
     </rule>
+
+    <!-- Don't require visibility on constants, as that's unsupported in PHP 7.0. -->
+    <rule ref="PSR12.Properties.ConstantVisibility.NotFound">
+        <exclude-pattern>tests/*</exclude-pattern>
+    </rule>
 </ruleset>

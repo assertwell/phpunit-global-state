@@ -9,7 +9,7 @@ trait Runkit
     /**
      * Mark a test as skipped if Runkit is not available.
      *
-     * @throws PHPUnit\Framework\SkippedTestError
+     * @throws \PHPUnit\Framework\SkippedTestError
      */
     protected function requiresRunkit(string $message = ''): void
     {

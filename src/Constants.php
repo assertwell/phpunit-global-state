@@ -11,7 +11,7 @@ trait Constants
     /**
      * All constants being handled by this trait.
      *
-     * @var array
+     * @var array[]
      */
     private $_constants;
 
@@ -51,7 +51,7 @@ trait Constants
      *
      * @see runkit_constant_define()
      *
-     * @throws AssertWell\PHPUnitGlobalState\Exceptions\RedefineException
+     * @throws \AssertWell\PHPUnitGlobalState\Exceptions\RedefineException
      *
      * @param string $name  The constant name.
      * @param mixed  $value The scalar value to store in the constant.

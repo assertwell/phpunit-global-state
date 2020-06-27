@@ -15,40 +15,49 @@ use Tests\TestCase;
 class RunkitTest extends TestCase
 {
     /**
-     * @test
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
-    public function it_should_permit_tests_to_run_if_runkit_is_available()
+    private $instance;
+
+    /**
+     * @before
+     */
+    public function mockRunkitTrait(): void
     {
-        $instance = $this->getMockBuilder(Runkit::class)
-            ->setMethods(['isRunkitAvailable'])
-            ->getMockForTrait();
-        $instance->expects($this->once())
-            ->method('isRunkitAvailable')
-            ->willReturn(true);
-
-        $method = new \ReflectionMethod($instance, 'requiresRunkit');
-        $method->setAccessible(true);
-
-        $this->assertNull($method->invoke($instance));
+        $this->instance = $this->getMockForTrait(Runkit::class, [], '', true, true, true, [
+            'isRunkitAvailable',
+        ]);
     }
 
     /**
      * @test
      */
-    public function it_should_skip_tests_that_require_runkit_if_it_is_unavailable()
+    public function it_should_permit_tests_to_run_if_runkit_is_available(): void
     {
-        $instance = $this->getMockBuilder(Runkit::class)
-            ->setMethods(['isRunkitAvailable'])
-            ->getMockForTrait();
-        $instance->expects($this->once())
+        $this->instance->expects($this->once())
+            ->method('isRunkitAvailable')
+            ->willReturn(true);
+
+        $method = new \ReflectionMethod($this->instance, 'requiresRunkit');
+        $method->setAccessible(true);
+
+        $this->assertNull($method->invoke($this->instance));
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_skip_tests_that_require_runkit_if_it_is_unavailable(): void
+    {
+        $this->instance->expects($this->once())
             ->method('isRunkitAvailable')
             ->willReturn(false);
 
-        $method = new \ReflectionMethod($instance, 'requiresRunkit');
+        $method = new \ReflectionMethod($this->instance, 'requiresRunkit');
         $method->setAccessible(true);
 
         $this->expectException(SkippedTestError::class);
 
-        $method->invoke($instance);
+        $method->invoke($this->instance);
     }
 }

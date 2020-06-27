@@ -13,8 +13,8 @@ use PHPUnit\Framework\SkippedTestError;
  */
 class ConstantsTest extends TestCase
 {
-    public const EXISTING_CONSTANT = 'some existing value';
-    public const DELETE_THIS_CONSTANT = 'delete this constant';
+    const EXISTING_CONSTANT = 'some existing value';
+    const DELETE_THIS_CONSTANT = 'delete this constant';
 
     /**
      * @beforeClass

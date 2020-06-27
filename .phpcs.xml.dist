@@ -15,6 +15,10 @@
     <!-- Use PSR-12 as a base. -->
     <rule ref="PSR12" />
 
+    <!-- The distributed code should be compatible with PHP 7.0 and newer. -->
+    <config name="testVersion" value="7.0-" />
+    <rule ref="PHPCompatibility" />
+
     <!--
         Each of the traits will likely have a private array property that contains the global data
         to be restored, but we don't want to risk this conflicting with other properties that users

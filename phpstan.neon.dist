@@ -3,3 +3,7 @@ parameters:
     paths:
         - src
         - tests
+    ignoreErrors:
+        -
+            message: '#^Method \S+ has no return typehint specified\.$#'
+            path: tests/*

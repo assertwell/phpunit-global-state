@@ -43,7 +43,7 @@ jobs:
     - name: Install Runkit7
       run: |
         sudo /home/runner/pear/bin/pear install channel://pecl.php.net/runkit7-alpha
-        php -m | grep -q runkit7
+        php -m | grep -q runkit7 || (echo -e "\033[0;31mRunkit7 was installed but not activated, aborting.\033[0;0m" && exit 1)
 
 
     - name: Run test suite

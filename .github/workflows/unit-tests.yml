@@ -42,7 +42,7 @@ jobs:
 
     - name: Install Runkit7
       run: |
-        sudo /home/runner/pear/bin/pear install channel://pecl.php.net/runkit7
+        sudo /home/runner/pear/bin/pear install channel://pecl.php.net/runkit7-alpha
         php -m | grep -q runkit7
 
 

@@ -18,6 +18,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Configure PHP environment
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        tools: pecl
+        extensions: runkit7-alpha
+
     - name: Validate composer.json and composer.lock
       run: composer validate
 
@@ -33,18 +40,6 @@ jobs:
     - name: Install Composer dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest
-
-    - name: Install PEAR
-      run: |
-        wget http://pear.php.net/go-pear.phar
-        php go-pear.phar
-        echo 'export PATH=/home/runner/pear/bin:$PATH' >>~/.bash_profile
-
-    - name: Install Runkit7
-      run: |
-        sudo /home/runner/pear/bin/pear install channel://pecl.php.net/runkit7-alpha
-        php -m | grep -q runkit7 || (echo -e "\033[0;31mRunkit7 was installed but not activated, aborting.\033[0;0m" && exit 1)
-
 
     - name: Run test suite
       run: composer test:unit

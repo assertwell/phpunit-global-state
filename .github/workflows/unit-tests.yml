@@ -36,12 +36,15 @@ jobs:
 
     - name: Install PEAR
       run: |
-        wget http://pear.php.net/go-pear.phar \
-        && php go-pear.phar \
-        && echo 'export PATH=/home/runner/pear/bin:$PATH' >>~/.bash_profile
+        wget http://pear.php.net/go-pear.phar
+        php go-pear.phar
+        echo 'export PATH=/home/runner/pear/bin:$PATH' >>~/.bash_profile
 
     - name: Install Runkit7
-      run: sudo /home/runner/pear/bin/pear install channel://pecl.php.net/runkit7-3.1.0a1
+      run: |
+        sudo /home/runner/pear/bin/pear install channel://pecl.php.net/runkit7
+        php -m | grep -q runkit7
+
 
     - name: Run test suite
       run: composer test:unit

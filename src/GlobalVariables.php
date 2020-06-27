@@ -5,14 +5,14 @@ namespace AssertWell\PHPUnitGlobalState;
 trait GlobalVariables
 {
     /**
-     * @var array
+     * @var array[]
      */
     private $_globalVariables;
 
     /**
      * @before
      */
-    protected function resetGlobalVariables()
+    protected function resetGlobalVariables(): void
     {
         $this->_globalVariables = [
             'created' => [],
@@ -23,7 +23,7 @@ trait GlobalVariables
     /**
      * @after
      */
-    protected function restoreGlobalVariables()
+    protected function restoreGlobalVariables(): void
     {
         // Restore existing values.
         foreach ($this->_globalVariables['updated'] as $var => $value) {
@@ -47,7 +47,7 @@ trait GlobalVariables
     {
         if (! isset($GLOBALS[$variable])) {
             $this->_globalVariables['created'][] = $variable;
-        } elseif (! isset($this->backedUpGlobals['updated'][$variable])) {
+        } elseif (! isset($this->_globalVariables['updated'][$variable])) {
             $this->_globalVariables['updated'][$variable] = $GLOBALS[$variable];
         }
 

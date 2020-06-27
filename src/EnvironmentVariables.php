@@ -14,7 +14,7 @@ trait EnvironmentVariables
     /**
      * @before
      */
-    protected function resetEnvironmentVariableRegistry(): void
+    protected function resetEnvironmentVariableRegistry()
     {
         $this->_environmentVariables = [];
     }
@@ -22,7 +22,7 @@ trait EnvironmentVariables
     /**
      * @after
      */
-    protected function restoreEnvironmentVariables(): void
+    protected function restoreEnvironmentVariables()
     {
         foreach ($this->_environmentVariables as $variable => $value) {
             putenv(false === $value ? $variable : "${variable}=${value}");

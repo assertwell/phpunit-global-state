@@ -13,7 +13,7 @@ class EnvironmentVariablesTest extends TestCase
      * @test
      * @testdox setEnvironmentVariable() should be able to handle new environment variables
      */
-    public function setEnvironmentVariable_should_be_able_to_handle_new_environment_variables(): void
+    public function setEnvironmentVariable_should_be_able_to_handle_new_environment_variables()
     {
         $this->setEnvironmentVariable('TEST_VAR', 'first');
         $this->assertSame('first', getenv('TEST_VAR'));
@@ -26,7 +26,7 @@ class EnvironmentVariablesTest extends TestCase
      * @test
      * @testdox setEnvironmentVariable() should be able to handle new environment variables that are later re-defined
      */
-    public function setEnvironmentVariable_should_be_able_to_handle_new_environment_variables_even_if_redefined(): void
+    public function setEnvironmentVariable_should_be_able_to_handle_new_environment_variables_even_if_redefined()
     {
         $this->setEnvironmentVariable('TEST_VAR', 'first');
         $this->setEnvironmentVariable('TEST_VAR', 'second');
@@ -40,7 +40,7 @@ class EnvironmentVariablesTest extends TestCase
      * @test
      * @testdox setEnvironmentVariable() should be able to update existing environment variables
      */
-    public function setEnvironmentVariable_should_be_able_to_update_existing_environment_variables(): void
+    public function setEnvironmentVariable_should_be_able_to_update_existing_environment_variables()
     {
         putenv('TEST_VAR=first');
 
@@ -55,7 +55,7 @@ class EnvironmentVariablesTest extends TestCase
      * @test
      * @testdox setEnvironmentVariable() should be able to update existing environment variables multiple times
      */
-    public function setEnvironmentVariable_should_be_able_to_update_existing_env_variables_multiple_times(): void
+    public function setEnvironmentVariable_should_be_able_to_update_existing_env_variables_multiple_times()
     {
         putenv('TEST_VAR=first');
 
@@ -71,7 +71,7 @@ class EnvironmentVariablesTest extends TestCase
      * @test
      * @testdox deleteEnvironmentVariable() should be able to delete existing environment variables
      */
-    public function deleteEnvironmentVariable_should_be_able_to_delete_existing_environment_variables(): void
+    public function deleteEnvironmentVariable_should_be_able_to_delete_existing_environment_variables()
     {
         putenv('TEST_VAR=first');
 
@@ -86,7 +86,7 @@ class EnvironmentVariablesTest extends TestCase
      * @test
      * @testdox deleteEnvironmentVariable() should catch deleted — then re-defined — environment variables
      */
-    public function deleteEnvironmentVariable_should_catch_deleted_then_redefined_environment_variables(): void
+    public function deleteEnvironmentVariable_should_catch_deleted_then_redefined_environment_variables()
     {
         putenv('TEST_VAR=first');
 

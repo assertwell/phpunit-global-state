@@ -12,7 +12,7 @@ trait GlobalVariables
     /**
      * @before
      */
-    protected function resetGlobalVariables(): void
+    protected function resetGlobalVariables()
     {
         $this->_globalVariables = [
             'created' => [],
@@ -23,7 +23,7 @@ trait GlobalVariables
     /**
      * @after
      */
-    protected function restoreGlobalVariables(): void
+    protected function restoreGlobalVariables()
     {
         // Restore existing values.
         foreach ($this->_globalVariables['updated'] as $var => $value) {
@@ -43,7 +43,7 @@ trait GlobalVariables
      * @param mixed  $value    The new, temporary value. Passing NULL will unset the given
      *                         $variable, if it exists.
      */
-    protected function setGlobalVariable(string $variable, $value): void
+    protected function setGlobalVariable(string $variable, $value)
     {
         if (! isset($GLOBALS[$variable])) {
             $this->_globalVariables['created'][] = $variable;

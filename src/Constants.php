@@ -18,7 +18,7 @@ trait Constants
     /**
      * @before
      */
-    protected function resetConstants(): void
+    protected function resetConstants()
     {
         $this->_constants = [
             'created' => [],
@@ -29,7 +29,7 @@ trait Constants
     /**
      * @after
      */
-    protected function restoreConstants(): void
+    protected function restoreConstants()
     {
         foreach ($this->_constants['updated'] as $name => $value) {
             if (defined($name)) {

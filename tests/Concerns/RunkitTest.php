@@ -22,7 +22,7 @@ class RunkitTest extends TestCase
     /**
      * @before
      */
-    public function mockRunkitTrait(): void
+    public function mockRunkitTrait()
     {
         $this->instance = $this->getMockForTrait(Runkit::class, [], '', true, true, true, [
             'isRunkitAvailable',
@@ -32,7 +32,7 @@ class RunkitTest extends TestCase
     /**
      * @test
      */
-    public function it_should_permit_tests_to_run_if_runkit_is_available(): void
+    public function it_should_permit_tests_to_run_if_runkit_is_available()
     {
         $this->instance->expects($this->once())
             ->method('isRunkitAvailable')
@@ -47,7 +47,7 @@ class RunkitTest extends TestCase
     /**
      * @test
      */
-    public function it_should_skip_tests_that_require_runkit_if_it_is_unavailable(): void
+    public function it_should_skip_tests_that_require_runkit_if_it_is_unavailable()
     {
         $this->instance->expects($this->once())
             ->method('isRunkitAvailable')

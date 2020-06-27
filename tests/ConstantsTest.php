@@ -19,7 +19,7 @@ class ConstantsTest extends TestCase
     /**
      * @beforeClass
      */
-    public static function defineConstants(): void
+    public static function defineConstants()
     {
         define('EXISTING_CONSTANT', self::EXISTING_CONSTANT);
         define('DELETE_THIS_CONSTANT', self::DELETE_THIS_CONSTANT);
@@ -29,7 +29,7 @@ class ConstantsTest extends TestCase
      * @test
      * @testdox setConstant() should be able to handle newly-defined constants
      */
-    public function setConstant_should_be_able_to_handle_newly_defined_onstants(): void
+    public function setConstant_should_be_able_to_handle_newly_defined_onstants()
     {
         $this->requiresRunkit('This test depends on runkit being unavailable.');
 
@@ -46,7 +46,7 @@ class ConstantsTest extends TestCase
      * @test
      * @testdox setConstant() should be able to redefine existing constants
      */
-    public function setConstant_should_be_able_to_redefine_existing_constants(): void
+    public function setConstant_should_be_able_to_redefine_existing_constants()
     {
         $this->requiresRunkit('This test depends on runkit being unavailable.');
 
@@ -65,7 +65,7 @@ class ConstantsTest extends TestCase
      * @test
      * @testdox setConstant() should throw an exception if it cannot redefine a constant
      */
-    public function setConstant_should_throw_an_exception_if_it_cannot_redefine_a_constant(): void
+    public function setConstant_should_throw_an_exception_if_it_cannot_redefine_a_constant()
     {
         $this->requiresRunkit('This test depends on runkit being unavailable.');
 
@@ -83,7 +83,7 @@ class ConstantsTest extends TestCase
      * @test
      * @testdox deleteConstant() should be able to remove an existing constant
      */
-    public function deleteConstant_should_remove_an_existing_constant(): void
+    public function deleteConstant_should_remove_an_existing_constant()
     {
         $this->requiresRunkit('This test depends on runkit being unavailable.');
 
@@ -102,7 +102,7 @@ class ConstantsTest extends TestCase
      * @test
      * @testdox deleteConstant() should do nothing if the given constant does not exist
      */
-    public function deleteConstant_should_do_nothing_if_the_given_constant_does_not_exist(): void
+    public function deleteConstant_should_do_nothing_if_the_given_constant_does_not_exist()
     {
         $this->assertFalse(defined('SOME_CONSTANT'));
 

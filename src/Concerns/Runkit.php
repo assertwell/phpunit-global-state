@@ -11,7 +11,7 @@ trait Runkit
      *
      * @throws \PHPUnit\Framework\SkippedTestError
      */
-    protected function requiresRunkit(string $message = ''): void
+    protected function requiresRunkit(string $message = '')
     {
         if ($this->isRunkitAvailable()) {
             return;

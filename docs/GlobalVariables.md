@@ -9,7 +9,7 @@ In situations where apps store data in [global variables (e.g. `$GLOBALS`)](http
 
 Set the value of a global variable for the duration of the test.
 
-`setGlobalVariable(string $key, mixed $value = null): void`
+`setGlobalVariable(string $key, mixed $value = null): self`
 
 This method will directly alter the `$GLOBALS` superglobal, then restore the original value at the conclusion of the test method.
 
@@ -25,7 +25,28 @@ This method will directly alter the `$GLOBALS` superglobal, then restore the ori
 
 #### Return values
 
-This method does not return anything.
+This method will return the calling class, enabling multiple methods to be chained.
+
+---
+
+### deleteGlobalVariable()
+
+Delete an existing global variable for the duration of the test.
+
+`deleteGlobalVariable(string $key): self`
+
+This method is an alias of `setGlobalVariable($key, null)`;
+
+#### Parameters
+
+<dl>
+    <dt>$key</dt>
+    <dd>The global variable name.</dd>
+</dl>
+
+#### Return values
+
+This method will return the calling class, enabling multiple methods to be chained.
 
 
 ## Examples

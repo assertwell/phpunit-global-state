@@ -15,8 +15,29 @@
     <!-- Use PSR-12 as a base. -->
     <rule ref="PSR12" />
 
+    <!-- The distributed code should be compatible with PHP 5.6 and newer. -->
+    <config name="testVersion" value="5.6-" />
+    <rule ref="PHPCompatibility" />
+
+    <!--
+        Each of the traits will likely have a private array property that contains the global data
+        to be restored, but we don't want to risk this conflicting with other properties that users
+        might define in their tests.
+
+        As a result, we'll use the convention of `private $_somePropertyName`, but the underscore is
+        *not* meant to indicate visibility, but rather to avoid conflict.
+    -->
+    <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+        <exclude-pattern>src/*.php</exclude-pattern>
+    </rule>
+
     <!-- Test methods may use snake_case. -->
     <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
         <exclude-pattern>tests</exclude-pattern>
+    </rule>
+
+    <!-- Don't require visibility on constants, as that's unsupported in PHP 7.0. -->
+    <rule ref="PSR12.Properties.ConstantVisibility.NotFound">
+        <exclude-pattern>tests/*</exclude-pattern>
     </rule>
 </ruleset>

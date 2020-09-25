@@ -4,11 +4,11 @@ In situations where apps behave differently based on environment variables (e.g.
 
 ## Methods
 
-### setEnv
+### setEnvironmentVariable()
 
 Set or update an environment variable for the duration of the test.
 
-`setEnv(string $key[, mixed $value = null]): bool`
+`setEnvironmentVariable(string $key[, mixed $value = null]): self`
 
 This is a wrapper around [PHP's `putenv()` function](https://www.php.net/manual/en/function.putenv).
 
@@ -19,20 +19,22 @@ This is a wrapper around [PHP's `putenv()` function](https://www.php.net/manual/
     <dd>The environment variable name.</dd>
     <dt>$value</dt>
     <dd>The value to set for the environment variable. Default is <code>null</code></dd>
-    <dd>Passing <code>false</code> to <code>$value</code> will remove the environment variable.</dd>
+    <dd>Passing <code>NULL</code> to <code>$value</code> will remove the environment variable.</dd>
 </dl>
 
 #### Return values
 
-This method will return `true` if the environment variable was set/updated successfully, `false` otherwise.
+This method will return the calling class, enabling multiple methods to be chained.
 
-### deleteEnv
+---
+
+### deleteEnvironmentVariable()
 
 Delete/unset an environment variable for a single test.
 
-`deleteEnv(string $key): bool`
+`deleteEnvironmentVariable(string $key): bool`
 
-This is equivalent to calling [`$this->setEnv($key, false)`](#putenv).
+This is equivalent to calling [`$this->setEnvironmentVariable($key, null)`](#setenvironmentvariable).
 
 #### Parameters
 
@@ -43,22 +45,7 @@ This is equivalent to calling [`$this->setEnv($key, false)`](#putenv).
 
 #### Return values
 
-This method will return `true` if the environment variable was removed successfully, `false` otherwise.
-
-
-### getEnvironmentVariables
-
-Retrieve all environment variables that have been (re-)defined or deleted within this test.
-
-`getEnvironmentVariables(): array`
-
-#### Return values
-
-This method will return an array with any environment variables that have been modified via [`setEnv()`](#putenv) or [`deleteEnv()`](#deleteenv).
-
-The returned array will be in the form of `{variable name} => {initial value}`.
-
-If no environment variables have been modified, this method will return an empty array.
+This method will return the calling class, enabling multiple methods to be chained.
 
 
 ## Examples
@@ -80,7 +67,7 @@ class MyTestClass extends TestCase
      */
     public function greetings_should_include_the_username_env_var()
     {
-        $this->setEnv('username', 'Test McTest');
+        $this->setEnvironmentVariable('username', 'Test McTest');
 
         $this->assertSame('Hello, Test McTest!', greet_user());
     }

@@ -5,16 +5,16 @@ namespace AssertWell\PHPUnitGlobalState;
 trait GlobalVariables
 {
     /**
-     * @var array
+     * @var array[]
      */
-    private $globalVariables;
+    private $_globalVariables;
 
     /**
      * @before
      */
     protected function resetGlobalVariables()
     {
-        $this->globalVariables = [
+        $this->_globalVariables = [
             'created' => [],
             'updated' => [],
         ];
@@ -26,12 +26,12 @@ trait GlobalVariables
     protected function restoreGlobalVariables()
     {
         // Restore existing values.
-        foreach ($this->globalVariables['updated'] as $var => $value) {
+        foreach ($this->_globalVariables['updated'] as $var => $value) {
             $GLOBALS[$var] = $value;
         }
 
         // Remove anything that was freshly-defined.
-        foreach ($this->globalVariables['created'] as $var) {
+        foreach ($this->_globalVariables['created'] as $var) {
             unset($GLOBALS[$var]);
         }
     }
@@ -43,12 +43,12 @@ trait GlobalVariables
      * @param mixed  $value    The new, temporary value. Passing NULL will unset the given
      *                         $variable, if it exists.
      */
-    protected function setGlobalVariable(string $variable, $value): void
+    protected function setGlobalVariable($variable, $value)
     {
         if (! isset($GLOBALS[$variable])) {
-            $this->globalVariables['created'][] = $variable;
-        } elseif (! isset($this->backedUpGlobals['updated'][$variable])) {
-            $this->globalVariables['updated'][$variable] = $GLOBALS[$variable];
+            $this->_globalVariables['created'][] = $variable;
+        } elseif (! isset($this->_globalVariables['updated'][$variable])) {
+            $this->_globalVariables['updated'][$variable] = $GLOBALS[$variable];
         }
 
         if (null === $value) {

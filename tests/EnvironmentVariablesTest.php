@@ -3,125 +3,98 @@
 namespace Tests;
 
 /**
- * @covers \AssertWell\PHPUnitGlobalState\EnvironmentVariables
+ * @covers AssertWell\PHPUnitGlobalState\EnvironmentVariables
+ *
  * @group EnvironmentVariables
  */
 class EnvironmentVariablesTest extends TestCase
 {
     /**
      * @test
-     * @testdox setEnv() should inject the value into the environment
+     * @testdox setEnvironmentVariable() should be able to handle new environment variables
      */
-    public function setEnv_should_inject_the_value_into_the_environment(): void
+    public function setEnvironmentVariable_should_be_able_to_handle_new_environment_variables()
     {
-        $this->assertFalse(getenv('somevar'));
+        $this->setEnvironmentVariable('TEST_VAR', 'first');
+        $this->assertSame('first', getenv('TEST_VAR'));
 
-        $this->setEnv('somevar', 'someval');
-
-        $this->assertSame('someval', getenv('somevar'));
+        $this->restoreEnvironmentVariables();
+        $this->assertFalse(getenv('TEST_VAR'), 'The TEST_VAR environment variable should have been deleted.');
     }
 
     /**
      * @test
-     * @depends setEnv_should_inject_the_value_into_the_environment
+     * @testdox setEnvironmentVariable() should be able to handle new environment variables that are later re-defined
      */
-    public function new_environment_variables_should_be_cleared_after_each_test(): void
+    public function setEnvironmentVariable_should_be_able_to_handle_new_environment_variables_even_if_redefined()
     {
-        $this->assertFalse(getenv('somevar'), 'Expected "somevar" to have been reset.');
+        $this->setEnvironmentVariable('TEST_VAR', 'first');
+        $this->setEnvironmentVariable('TEST_VAR', 'second');
+        $this->assertSame('second', getenv('TEST_VAR'));
+
+        $this->restoreEnvironmentVariables();
+        $this->assertFalse(getenv('TEST_VAR'), 'The TEST_VAR environment variable should have been deleted.');
     }
 
     /**
      * @test
-     * @testdox setEnv() should be able to overwrite existing environment variables
+     * @testdox setEnvironmentVariable() should be able to update existing environment variables
      */
-    public function setEnv_should_be_able_to_overwrite_existing_environment_variables(): void
+    public function setEnvironmentVariable_should_be_able_to_update_existing_environment_variables()
     {
-        putenv('EXISTING_VAR=existing value');
+        putenv('TEST_VAR=first');
 
-        $this->setEnv('EXISTING_VAR', 'new value');
+        $this->setEnvironmentVariable('TEST_VAR', 'second');
+        $this->assertSame('second', getenv('TEST_VAR'));
 
-        $this->assertSame('new value', getenv('EXISTING_VAR'));
+        $this->restoreEnvironmentVariables();
+        $this->assertSame('first', getenv('TEST_VAR'), 'The previous value of TEST_VAR should have been restored.');
     }
 
     /**
      * @test
-     * @depends setEnv_should_be_able_to_overwrite_existing_environment_variables
+     * @testdox setEnvironmentVariable() should be able to update existing environment variables multiple times
      */
-    public function overwritten_values_should_be_restored_after_each_test(): void
+    public function setEnvironmentVariable_should_be_able_to_update_existing_env_variables_multiple_times()
     {
-        $this->assertSame('existing value', getenv('EXISTING_VAR'));
+        putenv('TEST_VAR=first');
+
+        $this->setEnvironmentVariable('TEST_VAR', 'second');
+        $this->setEnvironmentVariable('TEST_VAR', 'third');
+        $this->assertSame('third', getenv('TEST_VAR'));
+
+        $this->restoreEnvironmentVariables();
+        $this->assertSame('first', getenv('TEST_VAR'), 'The initial value of TEST_VAR should have been restored.');
     }
 
     /**
      * @test
+     * @testdox deleteEnvironmentVariable() should be able to delete existing environment variables
      */
-    public function an_environment_variable_may_be_defined_multiple_times(): void
+    public function deleteEnvironmentVariable_should_be_able_to_delete_existing_environment_variables()
     {
-        $this->setEnv('somevar', 'someval');
-        $this->setEnv('somevar', 'some other val');
-        $this->setEnv('somevar', 'some third val');
+        putenv('TEST_VAR=first');
 
-        $this->assertSame('some third val', getenv('somevar'));
-    }
+        $this->deleteEnvironmentVariable('TEST_VAR');
+        $this->assertFalse(getenv('TEST_VAR'));
 
-    /**
-     * Ensure calling setEnv() multiple times doesn't cause the variable to stick around.
-     *
-     * @test
-     * @depends an_environment_variable_may_be_defined_multiple_times
-     */
-    public function environment_variables_that_did_not_exist_before_should_be_removed(): void
-    {
-        $this->assertFalse(getenv('somevar'));
+        $this->restoreEnvironmentVariables();
+        $this->assertSame('first', getenv('TEST_VAR'), 'The initial value of TEST_VAR should have been restored.');
     }
 
     /**
      * @test
+     * @testdox deleteEnvironmentVariable() should catch deleted — then re-defined — environment variables
      */
-    public function existing_environment_variables_can_be_deleted(): void
+    public function deleteEnvironmentVariable_should_catch_deleted_then_redefined_environment_variables()
     {
-        putenv('WILL_BE_DELETED=abc123');
-        $this->setEnv('somevar', 'value');
+        putenv('TEST_VAR=first');
 
-        $this->deleteEnv('WILL_BE_DELETED');
-        $this->deleteEnv('somevar');
+        $this->deleteEnvironmentVariable('TEST_VAR');
+        $this->setEnvironmentVariable('TEST_VAR', 'second');
+        $this->assertSame('second', getenv('TEST_VAR'));
 
-        $this->assertFalse(getenv('WILL_BE_DELETED'));
-        $this->assertFalse(getenv('somevar'));
-    }
-
-    /**
-     * @test
-     * @depends existing_environment_variables_can_be_deleted
-     */
-    public function deleted_environment_variables_will_be_restored_after_each_test()
-    {
-        $this->assertSame('abc123', getenv('WILL_BE_DELETED'));
-        $this->assertFalse(getenv('somevar'));
-    }
-
-    /**
-     * @test
-     * @testdox getEnvironmentVariables() should return registered environment variables
-     */
-    public function getEnvironmentVariables_should_return_registered_environment_variables(): void
-    {
-        putenv('EXPECTED_TO_STAY_IN_ENVIRONMENT=abc123');
-        $this->setEnv('bar', 'baz');
-
-        $this->assertSame([
-            'bar' => false,
-        ], $this->getEnvironmentVariables());
-    }
-
-    /**
-     * @test
-     * @testdox getEnvironmentVariables() should only capture globals registered via setEnv()
-     * @depends getEnvironmentVariables_should_return_registered_environment_variables
-     */
-    public function getEnvironmentVariables_should_only_worry_about_globals_registered_via_setEnv(): void
-    {
-        $this->assertSame('abc123', getenv('EXPECTED_TO_STAY_IN_ENVIRONMENT'));
-        $this->assertEmpty($this->getEnvironmentVariables());
+        $this->restoreEnvironmentVariables();
+        $this->assertSame('first', getenv('TEST_VAR'), 'The initial value of TEST_VAR should have been restored.');
     }
 }

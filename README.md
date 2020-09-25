@@ -57,5 +57,11 @@ Of course, we might want a constant's original value to be restored after our te
 
 The library offers a number of traits, based on the type of global state that might need to be manipulated.
 
+* [Constants](docs/Constants.md) (requires Runkit7)
 * [Environment Variables](docs/EnvironmentVariables.md)
 * [Global Variables](docs/GlobalVariables.md)
+
+
+## Contributing
+
+If you're interested in contributing to the library, [please review our contributing guidelines](.github/CONTRIBUTING.md).

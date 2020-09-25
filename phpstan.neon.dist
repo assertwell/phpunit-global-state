@@ -1,0 +1,10 @@
+parameters:
+    level: 8
+    paths:
+        - src
+        - tests
+    ignoreErrors:
+        # PHPUnit framework classes are provided by symfony/phpunit-bridge.
+        -
+            message: '#^Class PHPUnit\\Framework\\.+ not found\.$#'
+            path: *

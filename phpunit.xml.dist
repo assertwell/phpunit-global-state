@@ -3,7 +3,6 @@
          colors="true"
          forceCoversAnnotation="true"
          beStrictAboutChangesToGlobalState="true"
-         beStrictAboutCoversAnnotation="true"
 >
     <testsuites>
         <testsuite name="Unit">
@@ -11,7 +10,7 @@
         </testsuite>
     </testsuites>
     <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="true">
+        <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
         </whitelist>
     </filter>

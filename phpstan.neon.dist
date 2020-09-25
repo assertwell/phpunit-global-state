@@ -4,6 +4,7 @@ parameters:
         - src
         - tests
     ignoreErrors:
+        # The PHPUnit base testcase is provided by symfony/phpunit-bridge.
         -
-            message: '#^Method \S+ has no return typehint specified\.$#'
+            message: '#^Class PHPUnit\\Framework\\TestCase not found\.$#'
             path: tests/*

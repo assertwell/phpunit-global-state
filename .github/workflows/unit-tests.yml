@@ -38,7 +38,7 @@ jobs:
           ${{ runner.os }}-php${{ matrix.php }}-composer-
 
     - name: Remove PHPStan
-      run: composer remove --dev szepeviktor/phpstan-wordpress --no-update
+      run: composer remove --dev phpstan/phpstan --no-update
 
     - name: Install Composer dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'

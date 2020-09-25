@@ -4,7 +4,7 @@ parameters:
         - src
         - tests
     ignoreErrors:
-        # The PHPUnit base testcase is provided by symfony/phpunit-bridge.
+        # PHPUnit framework classes are provided by symfony/phpunit-bridge.
         -
-            message: '#^Class PHPUnit\\Framework\\TestCase not found\.$#'
-            path: tests/*
+            message: '#^Class PHPUnit\\Framework\\.+ not found\.$#'
+            path: *

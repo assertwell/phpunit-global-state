@@ -1,4 +1,4 @@
-name: Coding standards
+name: Static code analysis
 
 on:
   push:
@@ -31,7 +31,7 @@ jobs:
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --no-suggest
+      run: composer update --prefer-dist --no-progress --no-suggest
 
-    - name: Run coding standards checks
-      run: composer test:standards
+    - name: Perform static code analysis
+      run: composer test:analysis

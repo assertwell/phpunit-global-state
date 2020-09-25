@@ -13,4 +13,4 @@ Initial public release of the package, with the following traits:
 * [`AssertWell\PHPUnitGlobalState\GlobalVariables`](docs/GlobalVariables.md)
 
 
-[Unreleased]: https://github.com/assertwell/phpunit-global-state/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/assertwell/phpunit-global-state/compare/master...develop

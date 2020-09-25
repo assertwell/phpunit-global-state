@@ -11,7 +11,7 @@ trait Runkit
      *
      * @throws \PHPUnit\Framework\SkippedTestError
      */
-    protected function requiresRunkit(string $message = '')
+    protected function requiresRunkit($message = '')
     {
         if ($this->isRunkitAvailable()) {
             return;
@@ -23,7 +23,7 @@ trait Runkit
     /**
      * Determine whether or not Runkit is available in the current environment.
      */
-    protected function isRunkitAvailable(): bool
+    protected function isRunkitAvailable()
     {
         return function_exists('runkit_constant_redefine');
     }

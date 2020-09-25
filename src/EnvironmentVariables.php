@@ -38,7 +38,7 @@ trait EnvironmentVariables
      * @param mixed  $value    The value to store in the environment variable. Passing NULL will
      *                         delete the environment variable.
      */
-    protected function setEnvironmentVariable(string $variable, $value = null): self
+    protected function setEnvironmentVariable($variable, $value = null)
     {
         if (! isset($this->_environmentVariables[$variable])) {
             $this->_environmentVariables[$variable] = getenv($variable);
@@ -54,7 +54,7 @@ trait EnvironmentVariables
      *
      * @param string $variable The variable name.
      */
-    protected function deleteEnvironmentVariable(string $variable): self
+    protected function deleteEnvironmentVariable($variable)
     {
         return $this->setEnvironmentVariable($variable, null);
     }

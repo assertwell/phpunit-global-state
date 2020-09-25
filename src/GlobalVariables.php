@@ -43,7 +43,7 @@ trait GlobalVariables
      * @param mixed  $value    The new, temporary value. Passing NULL will unset the given
      *                         $variable, if it exists.
      */
-    protected function setGlobalVariable(string $variable, $value)
+    protected function setGlobalVariable($variable, $value)
     {
         if (! isset($GLOBALS[$variable])) {
             $this->_globalVariables['created'][] = $variable;

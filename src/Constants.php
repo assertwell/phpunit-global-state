@@ -56,7 +56,7 @@ trait Constants
      * @param string $name  The constant name.
      * @param mixed  $value The scalar value to store in the constant.
      */
-    protected function setConstant(string $name, $value = null): self
+    protected function setConstant($name, $value = null)
     {
         $this->requiresRunkit('setConstant() requires Runkit be available, skipping.');
 
@@ -87,7 +87,7 @@ trait Constants
      *
      * @param string $name The constant name.
      */
-    protected function deleteConstant(string $name): self
+    protected function deleteConstant($name)
     {
         if (! defined($name)) {
             return $this;

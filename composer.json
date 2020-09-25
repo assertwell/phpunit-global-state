@@ -69,7 +69,9 @@
         ]
     },
     "scripts-descriptions": {
+        "test:analysis": "Perform static code analysis.",
         "test:coverage": "Generate HTML code coverage reports in tests/coverage/.",
+        "test:standards": "Check coding standards.",
         "test:unit": "Run unit tests for the library."
     }
 }

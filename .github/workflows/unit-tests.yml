@@ -37,9 +37,12 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php${{ matrix.php }}-composer-
 
+    - name: Remove PHPStan
+      run: composer remove --dev szepeviktor/phpstan-wordpress --no-update
+
     - name: Install Composer dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --no-suggest
+      run: composer update --prefer-dist --no-progress --no-suggest
 
     - name: Run test suite
       run: composer test:unit

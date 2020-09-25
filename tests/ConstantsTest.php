@@ -29,7 +29,7 @@ class ConstantsTest extends TestCase
      * @test
      * @testdox setConstant() should be able to handle newly-defined constants
      */
-    public function setConstant_should_be_able_to_handle_newly_defined_onstants()
+    public function setConstant_should_be_able_to_handle_newly_defined_constants()
     {
         $this->requiresRunkit('This test depends on runkit being unavailable.');
 

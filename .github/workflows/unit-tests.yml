@@ -23,7 +23,7 @@ jobs:
       with:
         php-version: ${{ matrix.php }}
         tools: pecl
-        extensions: runkit7-alpha
+        extensions: runkit, runkit7-alpha
 
     - name: Validate composer.json and composer.lock
       run: composer validate

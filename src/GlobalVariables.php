@@ -42,6 +42,8 @@ trait GlobalVariables
      * @param string $variable The global variable name.
      * @param mixed  $value    The new, temporary value. Passing NULL will unset the given
      *                         $variable, if it exists.
+     *
+     * @return self
      */
     protected function setGlobalVariable($variable, $value)
     {

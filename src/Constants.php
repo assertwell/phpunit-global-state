@@ -55,6 +55,8 @@ trait Constants
      *
      * @param string $name  The constant name.
      * @param mixed  $value The scalar value to store in the constant.
+     *
+     * @return self
      */
     protected function setConstant($name, $value = null)
     {
@@ -86,6 +88,8 @@ trait Constants
      * Delete a constant.
      *
      * @param string $name The constant name.
+     *
+     * @return self
      */
     protected function deleteConstant($name)
     {

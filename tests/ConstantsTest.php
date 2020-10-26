@@ -31,7 +31,7 @@ class ConstantsTest extends TestCase
      */
     public function setConstant_should_be_able_to_handle_newly_defined_constants()
     {
-        $this->requiresRunkit('This test depends on runkit being unavailable.');
+        $this->requiresRunkit('This test depends on runkit being available.');
 
         $this->assertFalse(defined('SOME_CONSTANT'));
 
@@ -48,7 +48,7 @@ class ConstantsTest extends TestCase
      */
     public function setConstant_should_be_able_to_redefine_existing_constants()
     {
-        $this->requiresRunkit('This test depends on runkit being unavailable.');
+        $this->requiresRunkit('This test depends on runkit being available.');
 
         $this->setConstant('EXISTING_CONSTANT', 'some other value');
         $this->assertSame('some other value', constant('EXISTING_CONSTANT'));
@@ -67,7 +67,7 @@ class ConstantsTest extends TestCase
      */
     public function setConstant_should_throw_an_exception_if_it_cannot_redefine_a_constant()
     {
-        $this->requiresRunkit('This test depends on runkit being unavailable.');
+        $this->requiresRunkit('This test depends on runkit being available.');
 
         $this->expectException(RedefineException::class);
         $this->setConstant('EXISTING_CONSTANT', (object) ['some' => 'object']);
@@ -85,7 +85,7 @@ class ConstantsTest extends TestCase
      */
     public function deleteConstant_should_remove_an_existing_constant()
     {
-        $this->requiresRunkit('This test depends on runkit being unavailable.');
+        $this->requiresRunkit('This test depends on runkit being available.');
 
         $this->deleteConstant('DELETE_THIS_CONSTANT');
         $this->assertFalse(defined('DELETE_THIS_CONSTANT'));

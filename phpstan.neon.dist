@@ -3,5 +3,17 @@ parameters:
     paths:
         - src
         - tests
-    scanDirectories:
-        - vendor/bin/.phpunit
+
+    bootstrapFiles:
+        - vendor/bin/.phpunit/phpunit/vendor/autoload.php
+
+    ignoreErrors:
+        # Don't require return type hinting in tests.
+        -
+            message: '#Method \S+ has no return typehint specified\.#'
+            path: tests/*
+
+        # Strings are a valid callable type.
+        -
+            message: '#Parameter \#1 \$function of function call_user_func_array expects callable\(\): mixed, string given\.#'
+            path: src/Support/Runkit.php

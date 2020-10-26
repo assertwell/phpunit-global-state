@@ -11,6 +11,8 @@ trait GlobalVariables
 
     /**
      * @before
+     *
+     * @return void
      */
     protected function resetGlobalVariables()
     {
@@ -22,6 +24,8 @@ trait GlobalVariables
 
     /**
      * @after
+     *
+     * @return void
      */
     protected function restoreGlobalVariables()
     {
@@ -42,6 +46,8 @@ trait GlobalVariables
      * @param string $variable The global variable name.
      * @param mixed  $value    The new, temporary value. Passing NULL will unset the given
      *                         $variable, if it exists.
+     *
+     * @return void
      */
     protected function setGlobalVariable($variable, $value)
     {

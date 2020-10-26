@@ -3,6 +3,7 @@
 namespace AssertWell\PHPUnitGlobalState;
 
 use AssertWell\PHPUnitGlobalState\Exceptions\RedefineException;
+use AssertWell\PHPUnitGlobalState\Support\Runkit;
 
 trait Constants
 {
@@ -33,7 +34,7 @@ trait Constants
     {
         foreach ($this->_constants['updated'] as $name => $value) {
             if (defined($name)) {
-                runkit_constant_redefine($name, $value);
+                Runkit::constant_redefine($name, $value);
             } else {
                 define($name, $value);
             }
@@ -41,7 +42,7 @@ trait Constants
 
         foreach ($this->_constants['created'] as $name) {
             if (defined($name)) {
-                runkit_constant_remove($name);
+                Runkit::constant_remove($name);
             }
         }
     }
@@ -66,7 +67,7 @@ trait Constants
             }
 
             try {
-                runkit_constant_redefine($name, $value);
+                Runkit::constant_redefine($name, $value);
             } catch (\Exception $e) {
                 throw new RedefineException(sprintf(
                     'Unable to redefine constant "%s" with value "%s".',
@@ -99,7 +100,7 @@ trait Constants
             $this->_constants['updated'][$name] = constant($name);
         }
 
-        runkit_constant_remove($name);
+        Runkit::constant_remove($name);
 
         return $this;
     }

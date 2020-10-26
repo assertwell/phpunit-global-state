@@ -56,7 +56,8 @@
             "@test:analysis"
         ],
         "test:analysis": [
-            "phpstan analyse"
+            "simple-phpunit --version",
+            "phpstan analyse -c phpstan.neon.dist"
         ],
         "test:coverage": [
             "phpdbg -qrr -d memory_limit=-1 ./vendor/bin/simple-phpunit --colors=always --testdox --coverage-html=tests/coverage"

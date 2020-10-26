@@ -13,6 +13,8 @@ trait EnvironmentVariables
 
     /**
      * @before
+     *
+     * @return void
      */
     protected function resetEnvironmentVariableRegistry()
     {
@@ -21,6 +23,8 @@ trait EnvironmentVariables
 
     /**
      * @after
+     *
+     * @return void
      */
     protected function restoreEnvironmentVariables()
     {
@@ -37,6 +41,8 @@ trait EnvironmentVariables
      * @param string $variable The environment variable name.
      * @param mixed  $value    The value to store in the environment variable. Passing NULL will
      *                         delete the environment variable.
+     *
+     * @return self
      */
     protected function setEnvironmentVariable($variable, $value = null)
     {
@@ -53,6 +59,8 @@ trait EnvironmentVariables
      * Delete an environment variable.
      *
      * @param string $variable The variable name.
+     *
+     * @return self
      */
     protected function deleteEnvironmentVariable($variable)
     {

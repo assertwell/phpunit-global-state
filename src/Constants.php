@@ -3,6 +3,7 @@
 namespace AssertWell\PHPUnitGlobalState;
 
 use AssertWell\PHPUnitGlobalState\Exceptions\RedefineException;
+use AssertWell\PHPUnitGlobalState\Support\Runkit;
 
 trait Constants
 {
@@ -17,6 +18,8 @@ trait Constants
 
     /**
      * @before
+     *
+     * @return void
      */
     protected function resetConstants()
     {
@@ -28,12 +31,14 @@ trait Constants
 
     /**
      * @after
+     *
+     * @return void
      */
     protected function restoreConstants()
     {
         foreach ($this->_constants['updated'] as $name => $value) {
             if (defined($name)) {
-                runkit_constant_redefine($name, $value);
+                Runkit::constant_redefine($name, $value);
             } else {
                 define($name, $value);
             }
@@ -41,7 +46,7 @@ trait Constants
 
         foreach ($this->_constants['created'] as $name) {
             if (defined($name)) {
-                runkit_constant_remove($name);
+                Runkit::constant_remove($name);
             }
         }
     }
@@ -55,6 +60,8 @@ trait Constants
      *
      * @param string $name  The constant name.
      * @param mixed  $value The scalar value to store in the constant.
+     *
+     * @return self
      */
     protected function setConstant($name, $value = null)
     {
@@ -66,7 +73,7 @@ trait Constants
             }
 
             try {
-                runkit_constant_redefine($name, $value);
+                Runkit::constant_redefine($name, $value);
             } catch (\Exception $e) {
                 throw new RedefineException(sprintf(
                     'Unable to redefine constant "%s" with value "%s".',
@@ -86,6 +93,8 @@ trait Constants
      * Delete a constant.
      *
      * @param string $name The constant name.
+     *
+     * @return self
      */
     protected function deleteConstant($name)
     {
@@ -99,7 +108,7 @@ trait Constants
             $this->_constants['updated'][$name] = constant($name);
         }
 
-        runkit_constant_remove($name);
+        Runkit::constant_remove($name);
 
         return $this;
     }

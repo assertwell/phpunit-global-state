@@ -56,8 +56,14 @@ class RunkitTest extends TestCase
         $method = new \ReflectionMethod($this->instance, 'requiresRunkit');
         $method->setAccessible(true);
 
-        $this->expectException(SkippedTestError::class);
+        // Older versions of PHPUnit will actually try to mark this as skipped.
+        try {
+            $method->invoke($this->instance);
+        } catch (SkippedTestError $e) {
+            $this->assertInstanceOf(SkippedTestError::class, $e);
+            return;
+        }
 
-        $method->invoke($this->instance);
+        $this->fail('Did not catch the expected SkippedTestError.');
     }
 }

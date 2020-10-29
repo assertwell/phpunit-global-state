@@ -9,6 +9,10 @@ namespace Tests;
  */
 class GlobalVariablesTest extends TestCase
 {
+    protected $backupGlobalsBlacklist = [
+        'setGlobalVariable',
+    ];
+
     /**
      * @test
      * @testdox setGlobalVariable() should be able to handle new global variables

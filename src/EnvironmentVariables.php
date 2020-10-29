@@ -9,17 +9,7 @@ trait EnvironmentVariables
      *
      * @var mixed[]
      */
-    private $_environmentVariables;
-
-    /**
-     * @before
-     *
-     * @return void
-     */
-    protected function resetEnvironmentVariableRegistry()
-    {
-        $this->_environmentVariables = [];
-    }
+    private $environmentVariables = [];
 
     /**
      * @after
@@ -28,7 +18,7 @@ trait EnvironmentVariables
      */
     protected function restoreEnvironmentVariables()
     {
-        foreach ($this->_environmentVariables as $variable => $value) {
+        foreach ($this->environmentVariables as $variable => $value) {
             putenv(false === $value ? $variable : "${variable}=${value}");
         }
     }
@@ -46,8 +36,8 @@ trait EnvironmentVariables
      */
     protected function setEnvironmentVariable($variable, $value = null)
     {
-        if (! isset($this->_environmentVariables[$variable])) {
-            $this->_environmentVariables[$variable] = getenv($variable);
+        if (! isset($this->environmentVariables[$variable])) {
+            $this->environmentVariables[$variable] = getenv($variable);
         }
 
         putenv(null === $value ? $variable : "${variable}=${value}");

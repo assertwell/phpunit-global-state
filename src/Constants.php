@@ -14,20 +14,10 @@ trait Constants
      *
      * @var array[]
      */
-    private $_constants;
-
-    /**
-     * @before
-     *
-     * @return void
-     */
-    protected function resetConstants()
-    {
-        $this->_constants = [
-            'created' => [],
-            'updated' => [],
-        ];
-    }
+    private $constants = [
+        'created' => [],
+        'updated' => [],
+    ];
 
     /**
      * @after
@@ -36,7 +26,7 @@ trait Constants
      */
     protected function restoreConstants()
     {
-        foreach ($this->_constants['updated'] as $name => $value) {
+        foreach ($this->constants['updated'] as $name => $value) {
             if (defined($name)) {
                 Runkit::constant_redefine($name, $value);
             } else {
@@ -44,7 +34,7 @@ trait Constants
             }
         }
 
-        foreach ($this->_constants['created'] as $name) {
+        foreach ($this->constants['created'] as $name) {
             if (defined($name)) {
                 Runkit::constant_remove($name);
             }
@@ -68,8 +58,8 @@ trait Constants
         $this->requiresRunkit('setConstant() requires Runkit be available, skipping.');
 
         if (defined($name)) {
-            if (! isset($this->_constants['updated'][$name])) {
-                $this->_constants['updated'][$name] = constant($name);
+            if (! isset($this->constants['updated'][$name])) {
+                $this->constants['updated'][$name] = constant($name);
             }
 
             try {
@@ -82,7 +72,7 @@ trait Constants
                 ));
             }
         } else {
-            $this->_constants['created'][] = $name;
+            $this->constants['created'][] = $name;
             define($name, $value);
         }
 
@@ -104,8 +94,8 @@ trait Constants
 
         $this->requiresRunkit('deleteConstant() requires Runkit be available, skipping.');
 
-        if (! isset($this->_constants[$name])) {
-            $this->_constants['updated'][$name] = constant($name);
+        if (! isset($this->constants[$name])) {
+            $this->constants['updated'][$name] = constant($name);
         }
 
         Runkit::constant_remove($name);

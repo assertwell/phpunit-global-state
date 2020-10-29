@@ -7,20 +7,10 @@ trait GlobalVariables
     /**
      * @var array[]
      */
-    private $_globalVariables;
-
-    /**
-     * @before
-     *
-     * @return void
-     */
-    protected function resetGlobalVariables()
-    {
-        $this->_globalVariables = [
-            'created' => [],
-            'updated' => [],
-        ];
-    }
+    private $globalVariables = [
+        'created' => [],
+        'updated' => [],
+    ];
 
     /**
      * @after
@@ -30,12 +20,12 @@ trait GlobalVariables
     protected function restoreGlobalVariables()
     {
         // Restore existing values.
-        foreach ($this->_globalVariables['updated'] as $var => $value) {
+        foreach ($this->globalVariables['updated'] as $var => $value) {
             $GLOBALS[$var] = $value;
         }
 
         // Remove anything that was freshly-defined.
-        foreach ($this->_globalVariables['created'] as $var) {
+        foreach ($this->globalVariables['created'] as $var) {
             unset($GLOBALS[$var]);
         }
     }
@@ -52,9 +42,9 @@ trait GlobalVariables
     protected function setGlobalVariable($variable, $value)
     {
         if (! isset($GLOBALS[$variable])) {
-            $this->_globalVariables['created'][] = $variable;
-        } elseif (! isset($this->_globalVariables['updated'][$variable])) {
-            $this->_globalVariables['updated'][$variable] = $GLOBALS[$variable];
+            $this->globalVariables['created'][] = $variable;
+        } elseif (! isset($this->globalVariables['updated'][$variable])) {
+            $this->globalVariables['updated'][$variable] = $GLOBALS[$variable];
         }
 
         if (null === $value) {

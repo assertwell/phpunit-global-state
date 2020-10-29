@@ -4,6 +4,7 @@ namespace Tests;
 
 use AssertWell\PHPUnitGlobalState\Exceptions\RedefineException;
 use PHPUnit\Framework\SkippedTestError;
+use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
 
 /**
  * Tests to ensure that state may be set in PHPUnit fixtures.
@@ -12,12 +13,14 @@ use PHPUnit\Framework\SkippedTestError;
  */
 class FixtureTest extends TestCase
 {
+    use SetUpTearDownTrait;
+
     protected $backupGlobalsBlacklist = [
         'FIXTURE_BEFORE_GLOBAL',
         'FIXTURE_SETUP_GLOBAL',
     ];
 
-    public function setUp(): void
+    public function doSetUp()
     {
         parent::setUp();
 

@@ -66,4 +66,33 @@ class RunkitTest extends TestCase
 
         $this->fail('Did not catch the expected SkippedTestError.');
     }
+
+    /**
+     * @test
+     */
+    public function it_should_be_able_to_namespace_values()
+    {
+        $namespace = new \ReflectionMethod($this->instance, 'getRunkitNamespace');
+        $namespace->setAccessible(true);
+        $namespace = $namespace->invoke($this->instance);
+
+        $method = new \ReflectionMethod($this->instance, 'runkitNamespace');
+        $method->setAccessible(true);
+
+        $this->assertSame(
+            $namespace . 'some_global_function',
+            $method->invoke($this->instance, 'some_global_function'),
+            'The global namespace should be eligible.'
+        );
+        $this->assertSame(
+            $namespace . 'Some\\Namespaced\\function_to_move',
+            $method->invoke($this->instance, 'Some\\Namespaced\\function_to_move'),
+            'Namespaces should be preserved.'
+        );
+        $this->assertSame(
+            $namespace . 'Some\\Namespaced\\function_with_leading_slashes',
+            $method->invoke($this->instance, '\\Some\\Namespaced\\function_with_leading_slashes'),
+            'Leading slashes should be stripped.'
+        );
+    }
 }

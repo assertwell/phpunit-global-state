@@ -32,12 +32,16 @@ trait Constants
             } else {
                 define($name, $value);
             }
+
+            unset($this->constants['updated'][$name]);
         }
 
-        foreach ($this->constants['created'] as $name) {
+        foreach ($this->constants['created'] as $key => $name) {
             if (defined($name)) {
                 Runkit::constant_remove($name);
             }
+
+            unset($this->constants['created'][$key]);
         }
     }
 

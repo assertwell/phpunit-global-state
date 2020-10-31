@@ -27,6 +27,10 @@ class FixtureTest extends TestCase
         $this->setConstant('FIXTURE_SETUP_CONSTANT', true);
         $this->setEnvironmentVariable('FIXTURE_SETUP_ENV', 'abc');
         $this->setGlobalVariable('FIXTURE_SETUP_GLOBAL', true);
+
+        $this->defineFunction('fixture_setup_function', function () {
+            return 'abc';
+        });
     }
 
     /**
@@ -37,13 +41,17 @@ class FixtureTest extends TestCase
         $this->setConstant('FIXTURE_BEFORE_CONSTANT', true);
         $this->setEnvironmentVariable('FIXTURE_BEFORE_ENV', 'xyz');
         $this->setGlobalVariable('FIXTURE_BEFORE_GLOBAL', true);
+
+        $this->defineFunction('fixture_before_function', function () {
+            return 'xyz';
+        });
     }
 
     /**
      * @test
      * @group Constants
      */
-    public function it_should_permit_constants_to_be_set_in_fixtures_method()
+    public function it_should_permit_constants_to_be_set_in_fixtures()
     {
         $this->assertTrue(
             defined('FIXTURE_SETUP_CONSTANT'),
@@ -69,7 +77,7 @@ class FixtureTest extends TestCase
      * @test
      * @group EnvironmentVariables
      */
-    public function it_should_permit_environment_variables_to_be_set_in_fixtures_method()
+    public function it_should_permit_environment_variables_to_be_set_in_fixtures()
     {
         $this->assertSame(
             'abc',
@@ -95,9 +103,37 @@ class FixtureTest extends TestCase
 
     /**
      * @test
+     * @group Functions
+     */
+    public function it_should_permit_functions_to_be_set_in_fixtures()
+    {
+        $this->assertSame(
+            'abc',
+            fixture_setup_function(),
+            'The function should have been defined in the setUp() method.'
+        );
+        $this->assertSame(
+            'xyz',
+            fixture_before_function(),
+            'The function should have been defined in the @before method.'
+        );
+
+        $this->restoreFunctions();
+        $this->assertFalse(
+            function_exists('fixture_setup_function'),
+            'The function should have been undefined by restoreFunctions().'
+        );
+        $this->assertFalse(
+            function_exists('fixture_before_function'),
+            'The function should have been undefined by restoreFunctions().'
+        );
+    }
+
+    /**
+     * @test
      * @group GlobalVariables
      */
-    public function it_should_permit_global_variables_to_be_set_in_fixtures_method()
+    public function it_should_permit_global_variables_to_be_set_in_fixtures()
     {
         $this->assertTrue(
             isset($GLOBALS['FIXTURE_SETUP_GLOBAL']),

@@ -13,8 +13,10 @@ namespace AssertWell\PHPUnitGlobalState\Support;
  * @method static bool constant_redefine(string $constname, mixed $value, int $newVisibility = NULL)
  * @method static bool constant_remove(string $constname)
  * @method static bool function_add(string $funcname, string $arglist, string $code, bool $return_by_reference = NULL, string $doc_comment = NULL, string $return_type, bool $is_strict = NULL)
+ * @method static bool function_add(string $funcname, \Closure $closure, string $doc_comment = NULL, string $return_type = NULL, bool $is_strict = NULL)
  * @method static bool function_copy(string $funcname, string $targetname)
  * @method static bool function_redefine(string $funcname, string $arglist, string $code, bool $return_by_reference = NULL, string $doc_comment = NULL, string $return_type = NULL, bool $is_strict)
+ * @method static bool function_redefine(string $funcname, \Closure $closure, string $doc_comment = NULL, string $return_type = NULL, string $is_strict = NULL)
  * @method static bool function_remove(string $funcname)
  * @method static bool function_rename(string $funcname, string $newname)
  * @method static bool import(string $filename, int $flags = NULL)
@@ -51,7 +53,7 @@ class Runkit
         }
 
         throw new \BadFunctionCallException(sprintf(
-            'Runkit7 does not include a runkit7_%1$s() function.',
+            'Neither runkit7_%1$s() nor runkit_%1$s() are defined.',
             $name
         ));
     }

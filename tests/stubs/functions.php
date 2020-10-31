@@ -4,7 +4,7 @@
  * Dummy functions for the sake of testing.
  */
 
-namespace Tests\Support;
+namespace Tests\Stubs;
 
 /**
  * Return the sum of three numbers.

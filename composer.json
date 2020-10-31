@@ -44,7 +44,7 @@
             "Tests\\": "tests/"
         },
         "files": [
-            "tests/Support/functions.php"
+            "tests/stubs/functions.php"
         ]
     },
     "config": {

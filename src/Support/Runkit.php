@@ -33,6 +33,13 @@ namespace AssertWell\PHPUnitGlobalState\Support;
 class Runkit
 {
     /**
+     * A namespace used to move things out of the way for the duration of a test.
+     *
+     * @var string
+     */
+    private static $namespace;
+
+    /**
      * Dynamically alias methods to the underlying Runkit functions.
      *
      * @throws \BadFunctionCallException if the underlying function does not exist.
@@ -56,5 +63,62 @@ class Runkit
             'Neither runkit7_%1$s() nor runkit_%1$s() are defined.',
             $name
         ));
+    }
+
+    /**
+     * Determine whether or not Runkit is available in the current environment.
+     *
+     * @return bool
+     */
+    public static function isAvailable()
+    {
+        return function_exists('runkit7_constant_redefine')
+            || function_exists('runkit_constant_redefine');
+    }
+
+    /**
+     * Get the current runkit namespace.
+     *
+     * If the property is currently empty, one will be created.
+     *
+     * @return string The namespace (with trailing backslash) where we're moving functions,
+     *                constants, etc. during tests.
+     */
+    public static function getNamespace()
+    {
+        if (empty(self::$namespace)) {
+            self::$namespace = uniqid(__NAMESPACE__ . '\\runkit_') . '\\';
+        }
+
+        return self::$namespace;
+    }
+
+    /**
+     * Namespace the given reference.
+     *
+     * @param string $var The item to be moved into the temporary test namespace.
+     *
+     * @return string The newly-namespaced item.
+     */
+    public static function makeNamespaced($var)
+    {
+        // Strip leading backslashes.
+        if (0 === mb_strpos($var, '\\')) {
+            $var = mb_substr($var, 1);
+        }
+
+        return self::getNamespace() . $var;
+    }
+
+    /**
+     * Reset static properties.
+     *
+     * This is helpful to run before tests in case self::$namespace gets polluted.
+     *
+     * @return void
+     */
+    public static function reset()
+    {
+        self::$namespace = '';
     }
 }

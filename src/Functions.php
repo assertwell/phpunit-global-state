@@ -8,8 +8,6 @@ use AssertWell\PHPUnitGlobalState\Support\Runkit;
 
 trait Functions
 {
-    use Concerns\Runkit;
-
     /**
      * All functions being handled by this trait.
      *
@@ -41,6 +39,8 @@ trait Functions
 
         array_map([Runkit::class, 'function_remove'], $this->functions['defined']);
         $this->functions['defined'] = [];
+
+        Runkit::reset();
     }
 
     /**
@@ -64,7 +64,9 @@ trait Functions
             ));
         }
 
-        $this->requiresRunkit('defineFunction() requires Runkit be available, skipping.');
+        if (! Runkit::isAvailable()) {
+            $this->markTestSkipped('defineFunction() requires Runkit be available, skipping.');
+        }
 
         if (! Runkit::function_add($name, $closure)) {
             throw new RunkitException(sprintf('Unable to define function %1$s().', $name));
@@ -91,11 +93,13 @@ trait Functions
             return $this->defineFunction($name, $closure);
         }
 
-        $this->requiresRunkit('redefineFunction() requires Runkit be available, skipping.');
+        if (! Runkit::isAvailable()) {
+            $this->markTestSkipped('redefineFunction() requires Runkit be available, skipping.');
+        }
 
         // Back up the original version of the function.
         if (! isset($this->functions['redefined'][$name])) {
-            $namespaced = $this->runkitNamespace($name);
+            $namespaced = Runkit::makeNamespaced($name);
 
             if (! Runkit::function_rename($name, $namespaced)) {
                 throw new RunkitException(sprintf('Unable to back up %1$s(), aborting.', $name));
@@ -126,7 +130,7 @@ trait Functions
             return $this;
         }
 
-        $namespaced = $this->runkitNamespace($name);
+        $namespaced = Runkit::makeNamespaced($name);
 
         if (! Runkit::function_rename($name, $namespaced)) {
             throw new RunkitException(sprintf('Unable to back up %1$s(), aborting.', $name));

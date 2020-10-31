@@ -7,8 +7,6 @@ use AssertWell\PHPUnitGlobalState\Support\Runkit;
 
 trait Constants
 {
-    use Concerns\Runkit;
-
     /**
      * All constants being handled by this trait.
      *
@@ -43,6 +41,8 @@ trait Constants
 
             unset($this->constants['created'][$key]);
         }
+
+        Runkit::reset();
     }
 
     /**
@@ -59,7 +59,9 @@ trait Constants
      */
     protected function setConstant($name, $value = null)
     {
-        $this->requiresRunkit('setConstant() requires Runkit be available, skipping.');
+        if (! Runkit::isAvailable()) {
+            $this->markTestSkipped('setConstant() requires Runkit be available, skipping.');
+        }
 
         if (defined($name)) {
             if (! isset($this->constants['updated'][$name])) {
@@ -96,7 +98,9 @@ trait Constants
             return $this;
         }
 
-        $this->requiresRunkit('deleteConstant() requires Runkit be available, skipping.');
+        if (! Runkit::isAvailable()) {
+            $this->markTestSkipped('deleteConstant() requires Runkit be available, skipping.');
+        }
 
         if (! isset($this->constants[$name])) {
             $this->constants['updated'][$name] = constant($name);

@@ -3,11 +3,11 @@
 namespace Tests;
 
 use AssertWell\PHPUnitGlobalState\Exceptions\FunctionExistsException;
+use AssertWell\PHPUnitGlobalState\Support\Runkit;
 
-use function Tests\Support\sum_three_numbers;
+use function Tests\Stubs\sum_three_numbers;
 
 /**
- * @covers AssertWell\PHPUnitGlobalState\Concerns\Runkit
  * @covers AssertWell\PHPUnitGlobalState\Functions
  *
  * @group Functions
@@ -19,7 +19,9 @@ class FunctionsTest extends TestCase
      */
     protected function verifyRunkitIsAvailable()
     {
-        $this->requiresRunkit('This test depends on runkit being available.');
+        if (! Runkit::isAvailable()) {
+            $this->markTestSkipped('This test depends on runkit being available.');
+        }
     }
 
     /**
@@ -46,17 +48,17 @@ class FunctionsTest extends TestCase
      */
     public function defineFunction_should_throw_a_warning_if_the_function_already_exists()
     {
-        $this->assertTrue(function_exists('Tests\Support\sum_three_numbers'));
-        $signature = (string) (new \ReflectionFunction('Tests\Support\sum_three_numbers'));
+        $this->assertTrue(function_exists('Tests\\Stubs\\sum_three_numbers'));
+        $signature = (string) (new \ReflectionFunction('Tests\\Stubs\\sum_three_numbers'));
 
         $this->expectException(FunctionExistsException::class);
-        $this->defineFunction('Tests\Support\sum_three_numbers', function ($return) {
+        $this->defineFunction('Tests\\Stubs\\sum_three_numbers', function ($return) {
             return $return;
         });
 
         $this->assertSame(
             $signature,
-            (string) (new \ReflectionFunction('Tests\Support\sum_three_numbers')),
+            (string) (new \ReflectionFunction('Tests\\Stubs\\sum_three_numbers')),
             'The original function should have been left untouched.'
         );
     }
@@ -67,20 +69,20 @@ class FunctionsTest extends TestCase
      */
     public function redefineFunction_should_be_able_to_redefine_existing_functions()
     {
-        $this->assertTrue(function_exists('Tests\Support\sum_three_numbers'));
-        $signature = (string) (new \ReflectionFunction('Tests\Support\sum_three_numbers'));
+        $this->assertTrue(function_exists('Tests\\Stubs\\sum_three_numbers'));
+        $signature = (string) (new \ReflectionFunction('Tests\\Stubs\\sum_three_numbers'));
 
-        $this->redefineFunction('Tests\Support\sum_three_numbers', function () {
+        $this->redefineFunction('Tests\\Stubs\\sum_three_numbers', function () {
             return 123;
         });
 
         $this->assertSame(123, sum_three_numbers(1, 2, 3));
 
         $this->restoreFunctions();
-        $this->assertTrue(function_exists('Tests\Support\sum_three_numbers'));
+        $this->assertTrue(function_exists('Tests\\Stubs\\sum_three_numbers'));
         $this->assertSame(
             $signature,
-            (string) (new \ReflectionFunction('Tests\Support\sum_three_numbers')),
+            (string) (new \ReflectionFunction('Tests\\Stubs\\sum_three_numbers')),
             'The original function definition should have been restored.'
         );
     }
@@ -114,16 +116,16 @@ class FunctionsTest extends TestCase
      */
     public function redefineFunction_should_be_able_to_redefine_existing_functions_multiple_times()
     {
-        $this->assertTrue(function_exists('Tests\Support\sum_three_numbers'));
-        $signature = (string) (new \ReflectionFunction('Tests\Support\sum_three_numbers'));
+        $this->assertTrue(function_exists('Tests\\Stubs\\sum_three_numbers'));
+        $signature = (string) (new \ReflectionFunction('Tests\\Stubs\\sum_three_numbers'));
 
-        $this->redefineFunction('Tests\Support\sum_three_numbers', function () {
+        $this->redefineFunction('Tests\\Stubs\\sum_three_numbers', function () {
             return 'first';
         });
-        $this->redefineFunction('Tests\Support\sum_three_numbers', function () {
+        $this->redefineFunction('Tests\\Stubs\\sum_three_numbers', function () {
             return 'second';
         });
-        $this->redefineFunction('Tests\Support\sum_three_numbers', function () {
+        $this->redefineFunction('Tests\\Stubs\\sum_three_numbers', function () {
             return 'third';
         });
 
@@ -136,7 +138,7 @@ class FunctionsTest extends TestCase
         $this->restoreFunctions();
         $this->assertSame(
             $signature,
-            (string) (new \ReflectionFunction('Tests\Support\sum_three_numbers')),
+            (string) (new \ReflectionFunction('Tests\\Stubs\\sum_three_numbers')),
             'The original function definition should have been restored.'
         );
     }
@@ -167,19 +169,19 @@ class FunctionsTest extends TestCase
     public function deleteFunction_should_be_able_to_delete_functions()
     {
         $this->assertTrue(
-            function_exists('Tests\Support\sum_three_numbers'),
+            function_exists('Tests\\Stubs\\sum_three_numbers'),
             'Test is predicated on this function existing.'
         );
 
-        $this->deleteFunction('Tests\Support\sum_three_numbers');
+        $this->deleteFunction('Tests\\Stubs\\sum_three_numbers');
         $this->assertFalse(
-            function_exists('Tests\Support\sum_three_numbers'),
+            function_exists('Tests\\Stubs\\sum_three_numbers'),
             'The function should have been deleted.'
         );
 
         $this->restoreFunctions();
         $this->assertTrue(
-            function_exists('Tests\Support\sum_three_numbers'),
+            function_exists('Tests\\Stubs\\sum_three_numbers'),
             'The function should have been restored.'
         );
     }
@@ -191,19 +193,19 @@ class FunctionsTest extends TestCase
     public function deleteFunction_should_do_nothing_if_the_function_does_not_exist()
     {
         $this->assertFalse(
-            function_exists('Tests\Support\sum_three_numbers_again'),
+            function_exists('Tests\\Stubs\\sum_three_numbers_again'),
             'Test is predicated on this function NOT existing.'
         );
 
-        $this->deleteFunction('Tests\Support\sum_three_numbers_again');
+        $this->deleteFunction('Tests\\Stubs\\sum_three_numbers_again');
         $this->assertFalse(
-            function_exists('Tests\Support\sum_three_numbers_again'),
+            function_exists('Tests\\Stubs\\sum_three_numbers_again'),
             'Deleting a non-existent function should not do anything.'
         );
 
         $this->restoreFunctions();
         $this->assertFalse(
-            function_exists('Tests\Support\sum_three_numbers_again'),
+            function_exists('Tests\\Stubs\\sum_three_numbers_again'),
             'Nothing should be restored as there was nothing to begin with.'
         );
     }

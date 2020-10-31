@@ -24,3 +24,7 @@ parameters:
             paths:
                 - tests/FixtureTest.php
                 - tests/FunctionsTest.php
+
+        -
+            message: '#Call to an undefined static method \S+#'
+            path: tests/Support/RunkitTest.php

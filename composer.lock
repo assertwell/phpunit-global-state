@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "efac7541b4b02889b60a3582c4bfa3eb",
+    "content-hash": "79ef5654d4d0319b3e09740bea89b2f4",
     "packages": [],
     "packages-dev": [
         {
@@ -141,16 +141,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.52",
+            "version": "0.12.57",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "e96dd5e7ae9aefed663bc7e285ad96792b67eadc"
+                "reference": "f9909d1d0c44b4cbaf72babcf80e8f14d6fdd55b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e96dd5e7ae9aefed663bc7e285ad96792b67eadc",
-                "reference": "e96dd5e7ae9aefed663bc7e285ad96792b67eadc",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/f9909d1d0c44b4cbaf72babcf80e8f14d6fdd55b",
+                "reference": "f9909d1d0c44b4cbaf72babcf80e8f14d6fdd55b",
                 "shasum": ""
             },
             "require": {
@@ -181,7 +181,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.52"
+                "source": "https://github.com/phpstan/phpstan/tree/0.12.57"
             },
             "funding": [
                 {
@@ -197,7 +197,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-25T07:23:44+00:00"
+            "time": "2020-11-21T12:53:28+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -257,21 +257,17 @@
         },
         {
             "name": "stevegrunwell/runkit7-installer",
-            "version": "v1.1.1",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stevegrunwell/runkit7-installer.git",
-                "reference": "76c4cdaf6a03298a545012f1b8d2588c34a10d0e"
+                "reference": "7a2ed7adc0a0e1e904b94e40c2224101aaf28a16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stevegrunwell/runkit7-installer/zipball/76c4cdaf6a03298a545012f1b8d2588c34a10d0e",
-                "reference": "76c4cdaf6a03298a545012f1b8d2588c34a10d0e",
+                "url": "https://api.github.com/repos/stevegrunwell/runkit7-installer/zipball/7a2ed7adc0a0e1e904b94e40c2224101aaf28a16",
+                "reference": "7a2ed7adc0a0e1e904b94e40c2224101aaf28a16",
                 "shasum": ""
-            },
-            "require-dev": {
-                "php": "^7.1",
-                "phpunit/phpunit": ">=6.0"
             },
             "bin": [
                 "bin/install-runkit.sh"
@@ -284,11 +280,10 @@
             "authors": [
                 {
                     "name": "Steve Grunwell",
-                    "email": "steve@stevegrunwell.com",
                     "homepage": "https://stevegrunwell.com"
                 }
             ],
-            "description": "Installer for PHP Runkit7",
+            "description": "Installer for PHP's runkit and runkit7 extensions",
             "keywords": [
                 "runkit",
                 "testing"
@@ -297,7 +292,7 @@
                 "issues": "https://github.com/stevegrunwell/runkit7-installer/issues",
                 "source": "https://github.com/stevegrunwell/runkit7-installer"
             },
-            "time": "2018-12-05T19:16:14+00:00"
+            "time": "2020-11-22T22:09:52+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",

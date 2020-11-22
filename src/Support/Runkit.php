@@ -13,8 +13,10 @@ namespace AssertWell\PHPUnitGlobalState\Support;
  * @method static bool constant_redefine(string $constname, mixed $value, int $newVisibility = NULL)
  * @method static bool constant_remove(string $constname)
  * @method static bool function_add(string $funcname, string $arglist, string $code, bool $return_by_reference = NULL, string $doc_comment = NULL, string $return_type, bool $is_strict = NULL)
+ * @method static bool function_add(string $funcname, \Closure $closure, string $doc_comment = NULL, string $return_type = NULL, bool $is_strict = NULL)
  * @method static bool function_copy(string $funcname, string $targetname)
  * @method static bool function_redefine(string $funcname, string $arglist, string $code, bool $return_by_reference = NULL, string $doc_comment = NULL, string $return_type = NULL, bool $is_strict)
+ * @method static bool function_redefine(string $funcname, \Closure $closure, string $doc_comment = NULL, string $return_type = NULL, string $is_strict = NULL)
  * @method static bool function_remove(string $funcname)
  * @method static bool function_rename(string $funcname, string $newname)
  * @method static bool import(string $filename, int $flags = NULL)
@@ -30,6 +32,13 @@ namespace AssertWell\PHPUnitGlobalState\Support;
  */
 class Runkit
 {
+    /**
+     * A namespace used to move things out of the way for the duration of a test.
+     *
+     * @var string
+     */
+    private static $namespace;
+
     /**
      * Dynamically alias methods to the underlying Runkit functions.
      *
@@ -51,8 +60,65 @@ class Runkit
         }
 
         throw new \BadFunctionCallException(sprintf(
-            'Runkit7 does not include a runkit7_%1$s() function.',
+            'Neither runkit7_%1$s() nor runkit_%1$s() are defined.',
             $name
         ));
+    }
+
+    /**
+     * Determine whether or not Runkit is available in the current environment.
+     *
+     * @return bool
+     */
+    public static function isAvailable()
+    {
+        return function_exists('runkit7_constant_redefine')
+            || function_exists('runkit_constant_redefine');
+    }
+
+    /**
+     * Get the current runkit namespace.
+     *
+     * If the property is currently empty, one will be created.
+     *
+     * @return string The namespace (with trailing backslash) where we're moving functions,
+     *                constants, etc. during tests.
+     */
+    public static function getNamespace()
+    {
+        if (empty(self::$namespace)) {
+            self::$namespace = uniqid(__NAMESPACE__ . '\\runkit_') . '\\';
+        }
+
+        return self::$namespace;
+    }
+
+    /**
+     * Namespace the given reference.
+     *
+     * @param string $var The item to be moved into the temporary test namespace.
+     *
+     * @return string The newly-namespaced item.
+     */
+    public static function makeNamespaced($var)
+    {
+        // Strip leading backslashes.
+        if (0 === mb_strpos($var, '\\')) {
+            $var = mb_substr($var, 1);
+        }
+
+        return self::getNamespace() . $var;
+    }
+
+    /**
+     * Reset static properties.
+     *
+     * This is helpful to run before tests in case self::$namespace gets polluted.
+     *
+     * @return void
+     */
+    public static function reset()
+    {
+        self::$namespace = '';
     }
 }

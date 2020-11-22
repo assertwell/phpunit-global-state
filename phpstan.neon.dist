@@ -17,3 +17,14 @@ parameters:
         -
             message: '#Parameter \#1 \$function of function call_user_func_array expects callable\(\): mixed, string given\.#'
             path: src/Support/Runkit.php
+
+        # Dynamically-defined functions.
+        -
+            message: '#Function \S+ not found\.$#'
+            paths:
+                - tests/FixtureTest.php
+                - tests/FunctionsTest.php
+
+        -
+            message: '#Call to an undefined static method \S+#'
+            path: tests/Support/RunkitTest.php

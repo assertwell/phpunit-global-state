@@ -7,6 +7,7 @@ use AssertWell\PHPUnitGlobalState\Constants;
 use AssertWell\PHPUnitGlobalState\EnvironmentVariables;
 use AssertWell\PHPUnitGlobalState\Functions;
 use AssertWell\PHPUnitGlobalState\GlobalVariables;
+use AssertWell\PHPUnitGlobalState\Methods;
 
 /**
  * Since this test suite is testing a series of traits meant to aid in testing other codebases
@@ -21,4 +22,5 @@ abstract class TestCase extends BaseTestCase
     use EnvironmentVariables;
     use Functions;
     use GlobalVariables;
+    use Methods;
 }

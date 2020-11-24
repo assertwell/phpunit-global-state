@@ -56,4 +56,22 @@ class RunkitTest extends TestCase
             'Leading slashes should be stripped.'
         );
     }
+
+    /**
+     * @test
+     */
+    public function makePrefixed_should_return_the_given_reference_with_a_prefix()
+    {
+        $prefix = Runkit::getPrefix();
+
+        $this->assertSame(
+            $prefix . 'some_method',
+            Runkit::makePrefixed('some_method')
+        );
+        $this->assertSame(
+            $prefix . 'Some_Namespaced_function_to_move',
+            Runkit::makePrefixed('Some\\Namespaced\\function_to_move'),
+            'Namespaces should be preserved.'
+        );
+    }
 }

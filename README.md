@@ -61,6 +61,7 @@ The library offers a number of traits, based on the type of global state that mi
 * [Environment Variables](docs/EnvironmentVariables.md)
 * [Functions](docs/Functions.md) (requires [Runkit7])
 * [Global Variables](docs/GlobalVariables.md)
+* [Methods](docs/Methods.md) (requires[Runkit7])
 
 
 ## Contributing

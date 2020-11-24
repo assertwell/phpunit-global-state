@@ -20,10 +20,43 @@ jobs:
 
     - name: Configure PHP environment
       uses: shivammathur/setup-php@v2
+      if: ${{ matrix.php >= '7.2' }}
       with:
         php-version: ${{ matrix.php }}
         tools: pecl
-        extensions: runkit, runkit7-alpha
+        extensions: runkit7-alpha
+      env:
+        fail-fast: true
+
+    - name: Configure PHP environment (PHP 7.1 only)
+      uses: shivammathur/setup-php@v2
+      if: ${{ matrix.php == '7.1' }}
+      with:
+        php-version: ${{ matrix.php }}
+        tools: pecl
+        extensions: runkit7-3.1.0a1
+      env:
+        fail-fast: true
+
+    # Version 2.x of runkit7 dropped PHP 7.0 support, but older releases are not available via PECL.
+    # https://pecl.php.net/package/runkit7
+    - name: Configure PHP environment (PHP 7.0 only)
+      uses: shivammathur/setup-php@v2
+      if: ${{ matrix.php == '7.0' }}
+      with:
+        php-version: ${{ matrix.php }}
+        tools: pecl
+        extensions: runkit7-1.0.11
+
+    - name: Configure PHP environment (PHP 5.x only)
+      uses: shivammathur/setup-php@v2
+      if: ${{ matrix.php <= '5.6' }}
+      with:
+        php-version: ${{ matrix.php }}
+        tools: pecl
+        extensions: runkit
+      env:
+        fail-fast: true
 
     - name: Validate composer.json and composer.lock
       run: composer validate

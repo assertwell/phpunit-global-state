@@ -9,22 +9,16 @@ trait EnvironmentVariables
      *
      * @var mixed[]
      */
-    private $_environmentVariables;
-
-    /**
-     * @before
-     */
-    protected function resetEnvironmentVariableRegistry()
-    {
-        $this->_environmentVariables = [];
-    }
+    private $environmentVariables = [];
 
     /**
      * @after
+     *
+     * @return void
      */
     protected function restoreEnvironmentVariables()
     {
-        foreach ($this->_environmentVariables as $variable => $value) {
+        foreach ($this->environmentVariables as $variable => $value) {
             putenv(false === $value ? $variable : "${variable}=${value}");
         }
     }
@@ -37,11 +31,13 @@ trait EnvironmentVariables
      * @param string $variable The environment variable name.
      * @param mixed  $value    The value to store in the environment variable. Passing NULL will
      *                         delete the environment variable.
+     *
+     * @return self
      */
     protected function setEnvironmentVariable($variable, $value = null)
     {
-        if (! isset($this->_environmentVariables[$variable])) {
-            $this->_environmentVariables[$variable] = getenv($variable);
+        if (! isset($this->environmentVariables[$variable])) {
+            $this->environmentVariables[$variable] = getenv($variable);
         }
 
         putenv(null === $value ? $variable : "${variable}=${value}");
@@ -53,6 +49,8 @@ trait EnvironmentVariables
      * Delete an environment variable.
      *
      * @param string $variable The variable name.
+     *
+     * @return self
      */
     protected function deleteEnvironmentVariable($variable)
     {

@@ -3,47 +3,46 @@
 namespace AssertWell\PHPUnitGlobalState;
 
 use AssertWell\PHPUnitGlobalState\Exceptions\RedefineException;
+use AssertWell\PHPUnitGlobalState\Support\Runkit;
 
 trait Constants
 {
-    use Concerns\Runkit;
-
     /**
      * All constants being handled by this trait.
      *
      * @var array[]
      */
-    private $_constants;
-
-    /**
-     * @before
-     */
-    protected function resetConstants()
-    {
-        $this->_constants = [
-            'created' => [],
-            'updated' => [],
-        ];
-    }
+    private $constants = [
+        'created' => [],
+        'updated' => [],
+    ];
 
     /**
      * @after
+     *
+     * @return void
      */
     protected function restoreConstants()
     {
-        foreach ($this->_constants['updated'] as $name => $value) {
+        foreach ($this->constants['updated'] as $name => $value) {
             if (defined($name)) {
-                runkit_constant_redefine($name, $value);
+                Runkit::constant_redefine($name, $value);
             } else {
                 define($name, $value);
             }
+
+            unset($this->constants['updated'][$name]);
         }
 
-        foreach ($this->_constants['created'] as $name) {
+        foreach ($this->constants['created'] as $key => $name) {
             if (defined($name)) {
-                runkit_constant_remove($name);
+                Runkit::constant_remove($name);
             }
+
+            unset($this->constants['created'][$key]);
         }
+
+        Runkit::reset();
     }
 
     /**
@@ -55,18 +54,22 @@ trait Constants
      *
      * @param string $name  The constant name.
      * @param mixed  $value The scalar value to store in the constant.
+     *
+     * @return self
      */
     protected function setConstant($name, $value = null)
     {
-        $this->requiresRunkit('setConstant() requires Runkit be available, skipping.');
+        if (! Runkit::isAvailable()) {
+            $this->markTestSkipped('setConstant() requires Runkit be available, skipping.');
+        }
 
         if (defined($name)) {
-            if (! isset($this->_constants['updated'][$name])) {
-                $this->_constants['updated'][$name] = constant($name);
+            if (! isset($this->constants['updated'][$name])) {
+                $this->constants['updated'][$name] = constant($name);
             }
 
             try {
-                runkit_constant_redefine($name, $value);
+                Runkit::constant_redefine($name, $value);
             } catch (\Exception $e) {
                 throw new RedefineException(sprintf(
                     'Unable to redefine constant "%s" with value "%s".',
@@ -75,7 +78,7 @@ trait Constants
                 ));
             }
         } else {
-            $this->_constants['created'][] = $name;
+            $this->constants['created'][] = $name;
             define($name, $value);
         }
 
@@ -86,6 +89,8 @@ trait Constants
      * Delete a constant.
      *
      * @param string $name The constant name.
+     *
+     * @return self
      */
     protected function deleteConstant($name)
     {
@@ -93,13 +98,15 @@ trait Constants
             return $this;
         }
 
-        $this->requiresRunkit('deleteConstant() requires Runkit be available, skipping.');
-
-        if (! isset($this->_constants[$name])) {
-            $this->_constants['updated'][$name] = constant($name);
+        if (! Runkit::isAvailable()) {
+            $this->markTestSkipped('deleteConstant() requires Runkit be available, skipping.');
         }
 
-        runkit_constant_remove($name);
+        if (! isset($this->constants[$name])) {
+            $this->constants['updated'][$name] = constant($name);
+        }
+
+        Runkit::constant_remove($name);
 
         return $this;
     }

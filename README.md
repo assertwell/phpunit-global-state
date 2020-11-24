@@ -30,7 +30,7 @@ class MyTestClass extends TestCase
 
 ### Introduction to Runkit
 
-Some of the traits will rely on [Runkit7](https://www.php.net/runkit7), a port of PHP's runkit designed to work in PHP 7.x, to rewrite code at runtime (a.k.a. "monkey-patching").
+Some of the traits will rely on [Runkit7], a port of PHP's runkit designed to work in PHP 7.x, to rewrite code at runtime (a.k.a. "monkey-patching").
 
 For example, once a PHP constant is defined, it will normally have that value until the PHP process ends. Under normal circumstances, that's great: it prevents the value from being accidentally overwritten and/or tampered with.
 
@@ -46,7 +46,7 @@ var_dump(SOME_CONSTANT)
 #=> string(10) "some value"
 
 // Now, re-define the constant.
-runkit_constant_redefine('SOME_CONSTANT', 'some other value');
+runkit7_constant_redefine('SOME_CONSTANT', 'some other value');
 var_dump(SOME_CONSTANT)
 #=> string(16) "some other value"
 ```
@@ -57,11 +57,14 @@ Of course, we might want a constant's original value to be restored after our te
 
 The library offers a number of traits, based on the type of global state that might need to be manipulated.
 
-* [Constants](docs/Constants.md) (requires Runkit7)
+* [Constants](docs/Constants.md) (requires [Runkit7])
 * [Environment Variables](docs/EnvironmentVariables.md)
+* [Functions](docs/Functions.md) (requires [Runkit7])
 * [Global Variables](docs/GlobalVariables.md)
 
 
 ## Contributing
 
 If you're interested in contributing to the library, [please review our contributing guidelines](.github/CONTRIBUTING.md).
+
+[Runkit7]: docs/Runkit.md

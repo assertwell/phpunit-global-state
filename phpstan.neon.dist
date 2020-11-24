@@ -3,8 +3,28 @@ parameters:
     paths:
         - src
         - tests
+
+    bootstrapFiles:
+        - vendor/bin/.phpunit/phpunit/vendor/autoload.php
+
     ignoreErrors:
-        # PHPUnit framework classes are provided by symfony/phpunit-bridge.
+        # Don't require return type hinting in tests.
         -
-            message: '#^Class PHPUnit\\Framework\\.+ not found\.$#'
-            path: *
+            message: '#Method \S+ has no return typehint specified\.#'
+            path: tests/*
+
+        # Strings are a valid callable type.
+        -
+            message: '#Parameter \#1 \$function of function call_user_func_array expects callable\(\): mixed, string given\.#'
+            path: src/Support/Runkit.php
+
+        # Dynamically-defined functions.
+        -
+            message: '#Function \S+ not found\.$#'
+            paths:
+                - tests/FixtureTest.php
+                - tests/FunctionsTest.php
+
+        -
+            message: '#Call to an undefined static method \S+#'
+            path: tests/Support/RunkitTest.php

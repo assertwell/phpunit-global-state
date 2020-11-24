@@ -2,15 +2,8 @@
 
 Some applications — especially WordPress — will use [PHP constants](https://www.php.net/manual/en/language.constants.php) for configuration that should not be edited directly through the <abbr title="User Interface">UI</abbr>.
 
-Normally, a constant cannot be redefined or removed once defined; however, [the runkit7 extension](https://www.php.net/manual/en/book.runkit7) exposes functions to modify normally immutable constructs.
+Normally, a constant cannot be redefined or removed once defined; however, [the runkit7 extension](Runkit.md) exposes functions to modify normally immutable constructs.
 
-If runkit functions are unavailable, the `Constants` trait will automatically skip tests that rely on this functionality.
-
-In order to install runkit7 in your development and CI environments, you may use [the installer bundled with this repo](https://github.com/stevegrunwell/runkit7-installer):
-
-```sh
-$ sudo ./vendor/bin/install-runkit.sh
-```
 
 ## Methods
 

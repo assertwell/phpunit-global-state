@@ -38,15 +38,15 @@ jobs:
       env:
         fail-fast: true
 
+    # Version 2.x of runkit7 dropped PHP 7.0 support, but older releases are not available via PECL.
+    # https://pecl.php.net/package/runkit7
     - name: Configure PHP environment (PHP 7.0 only)
       uses: shivammathur/setup-php@v2
       if: ${{ matrix.php == '7.0' }}
       with:
         php-version: ${{ matrix.php }}
         tools: pecl
-        extensions: https://github.com/runkit7/runkit7/releases/download/1.0.11/runkit-1.0.11.tgz
-      env:
-        fail-fast: true
+        extensions: runkit7-1.0.11
 
     - name: Configure PHP environment (PHP 5.x only)
       uses: shivammathur/setup-php@v2

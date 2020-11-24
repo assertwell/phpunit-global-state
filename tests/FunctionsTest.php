@@ -89,7 +89,7 @@ class FunctionsTest extends TestCase
 
     /**
      * @test
-     * @testdox redefineFunction() should be able to redefine an existing function
+     * @testdox redefineFunction() should be able to redefine newly-defined functions
      */
     public function redefineFunction_should_be_able_to_redefine_newly_defined_functions()
     {
@@ -111,7 +111,7 @@ class FunctionsTest extends TestCase
 
     /**
      * @test
-     * @testdox redefineFunction() should be able to redefine an existing function multiple times
+     * @testdox redefineFunction() should be able to redefine an existing functions multiple times
      * @depends redefineFunction_should_be_able_to_redefine_existing_functions
      */
     public function redefineFunction_should_be_able_to_redefine_existing_functions_multiple_times()

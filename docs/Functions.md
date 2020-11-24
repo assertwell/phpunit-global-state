@@ -19,7 +19,7 @@ Define a new function for the duration of the test.
 
 `defineFunction(string $name, \Closure $closure): self`
 
-This is a wrapper around [PHP's `runkit_function_define()` function](https://www.php.net/manual/en/function.runkit-function-define.php).
+This is a wrapper around [PHP's `runkit7_function_define()` function](https://www.php.net/manual/en/function.runkit7-function-define.php).
 
 #### Parameters
 
@@ -44,7 +44,7 @@ Redefine an existing function for the duration of the test. If `$name` does not 
 
 `redefineFunction(string $name, \Closure $closure): self`
 
-This is a wrapper around [PHP's `runkit_function_redefine()` function](https://www.php.net/manual/en/function.runkit-function-redefine.php).
+This is a wrapper around [PHP's `runkit7_function_redefine()` function](https://www.php.net/manual/en/function.runkit7-function-redefine.php).
 
 #### Parameters
 
@@ -59,7 +59,7 @@ This is a wrapper around [PHP's `runkit_function_redefine()` function](https://w
 
 This method will return the calling class, enabling multiple methods to be chained.
 
-An `AssertWell\PHPUnitGlobalState\Exceptions\RunkitException` will be thrown if the given function cannot be defined.
+An `AssertWell\PHPUnitGlobalState\Exceptions\RunkitException` will be thrown if the given function cannot be (re)defined.
 
 ---
 

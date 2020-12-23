@@ -15,7 +15,7 @@ parameters:
 
         # Strings are a valid callable type.
         -
-            message: '#Parameter \#1 \$function of function call_user_func_array expects callable\(\): mixed, string given\.#'
+            message: '#Parameter \#1 \S+ of function call_user_func_array expects callable\(\): mixed, string given\.#'
             path: src/Support/Runkit.php
 
         # Dynamically-defined functions.

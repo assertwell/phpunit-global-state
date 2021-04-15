@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Version 0.2.1] — 2021-04-15
 
 * Mark tests that use `defineFunction()` or `deleteFunction()` as skipped if Runkit is unavailable ([#25])
+* Fix coding standards, remove unused namespace imports ([#22], props [@peter279k](https://github.com/peter279k))
 
 
 ## [Version 0.2.0] — 2020-11-23
@@ -32,4 +33,5 @@ Initial public release of the package, with the following traits:
 [#15]: https://github.com/assertwell/phpunit-global-state/pull/15
 [#16]: https://github.com/assertwell/phpunit-global-state/pull/16
 [#17]: https://github.com/assertwell/phpunit-global-state/pull/17
+[#22]: https://github.com/assertwell/phpunit-global-state/pull/22
 [#25]: https://github.com/assertwell/phpunit-global-state/pull/25

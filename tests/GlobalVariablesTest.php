@@ -9,6 +9,9 @@ namespace Tests;
  */
 class GlobalVariablesTest extends TestCase
 {
+    /**
+     * @var array<string>
+     */
     protected $backupGlobalsBlacklist = [
         'setGlobalVariable',
     ];

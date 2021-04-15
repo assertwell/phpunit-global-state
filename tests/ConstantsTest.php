@@ -4,7 +4,6 @@ namespace Tests;
 
 use AssertWell\PHPUnitGlobalState\Exceptions\RedefineException;
 use AssertWell\PHPUnitGlobalState\Support\Runkit;
-use PHPUnit\Framework\SkippedTestError;
 
 /**
  * @covers AssertWell\PHPUnitGlobalState\Constants

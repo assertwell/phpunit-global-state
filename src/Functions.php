@@ -56,6 +56,10 @@ trait Functions
      */
     protected function defineFunction($name, \Closure $closure)
     {
+        if (! Runkit::isAvailable()) {
+            $this->markTestSkipped('defineFunction() requires Runkit be available, skipping.');
+        }
+
         if (function_exists($name)) {
             throw new FunctionExistsException(sprintf(
                 'Function %1$s() already exists. You may redefine it using %2$s::redefineFunction() instead.',
@@ -128,6 +132,10 @@ trait Functions
     {
         if (! function_exists($name)) {
             return $this;
+        }
+
+        if (! Runkit::isAvailable()) {
+            $this->markTestSkipped('deleteFunction() requires Runkit be available, skipping.');
         }
 
         $namespaced = Runkit::makeNamespaced($name);

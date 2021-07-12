@@ -21,8 +21,10 @@ namespace AssertWell\PHPUnitGlobalState\Support;
  * @method static bool function_rename(string $funcname, string $newname)
  * @method static bool import(string $filename, int $flags = NULL)
  * @method static bool  method_add(string $classname, string $methodname, string $args, string $code, int $flags = RUNKIT7_ACC_PUBLIC, string $doc_comment = NULL, string $return_type = NULL, bool $is_strict = NULL)
+ * @method static bool  method_add(string $classname, string $methodname, \Closure $closure, int $flags = RUNKIT7_ACC_PUBLIC, string $doc_comment = NULL, string $return_type = NULL, bool $is_strict = NULL)
  * @method static bool  method_copy(string $dClass, string $dMethod, string $sClass, string $sMethod = NULL)
  * @method static bool  method_redefine(string $classname, string $methodname, string $args, string $code, int $flags = RUNKIT7_ACC_PUBLIC, string $doc_comment = NULL, string $return_type, bool $is_strict = NULL)
+ * @method static bool  method_redefine(string $classname, string $methodname, \Closure $closure, int $flags = RUNKIT7_ACC_PUBLIC, string $doc_comment = NULL, string $return_type, bool $is_strict = NULL)
  * @method static bool  method_remove(string $classname, string $methodname)
  * @method static bool  method_rename(string $classname, string $methodname, string $newname)
  * @method static int   object_id(object $obj)
@@ -38,6 +40,13 @@ class Runkit
      * @var string
      */
     private static $namespace;
+
+    /**
+     * A prefix used to move things out of the way for the duration of a test.
+     *
+     * @var string
+     */
+    private static $prefix;
 
     /**
      * Dynamically alias methods to the underlying Runkit functions.
@@ -94,6 +103,57 @@ class Runkit
     }
 
     /**
+     * Get the current runkit prefix.
+     *
+     * If the property is currently empty, one will be created.
+     *
+     * @return string The prefix we're applying to renamed methods.
+     */
+    public static function getPrefix()
+    {
+        if (empty(self::$prefix)) {
+            self::$prefix = str_replace('\\', '_', self::getNamespace());
+        }
+
+        return self::$prefix;
+    }
+
+    /**
+     * Get the appropriate visibility/static flag(s) for defining methods.
+     *
+     * @param string $visibility The method visibility.
+     * @param bool   $static     Optional. Whether or not the method should be defined as static.
+     *                           Default is false.
+     *
+     * @return int The corresponding visibility flag, possibly combined with RUNKIT7_ACC_STATIC
+     *             depending on $static.
+     */
+    public static function getVisibilityFlags($visibility, $static = false)
+    {
+        if ('protected' === $visibility) {
+            if (defined('RUNKIT7_ACC_PROTECTED')) {
+                return $static ? RUNKIT7_ACC_PROTECTED | RUNKIT7_ACC_STATIC : RUNKIT7_ACC_PROTECTED;
+            }
+
+            return $static ? RUNKIT_ACC_PROTECTED | RUNKIT_ACC_STATIC : RUNKIT_ACC_PROTECTED;
+        }
+
+        if ('private' === $visibility) {
+            if (defined('RUNKIT7_ACC_PRIVATE')) {
+                return $static ? RUNKIT7_ACC_PRIVATE | RUNKIT7_ACC_STATIC : RUNKIT7_ACC_PRIVATE;
+            }
+
+            return $static ? RUNKIT_ACC_PRIVATE | RUNKIT_ACC_STATIC : RUNKIT_ACC_PRIVATE;
+        }
+
+        if (defined('RUNKIT7_ACC_PUBLIC')) {
+            return $static ? RUNKIT7_ACC_PUBLIC | RUNKIT7_ACC_STATIC : RUNKIT7_ACC_PUBLIC;
+        }
+
+        return $static ? RUNKIT_ACC_PUBLIC | RUNKIT_ACC_STATIC : RUNKIT_ACC_PUBLIC;
+    }
+
+    /**
      * Namespace the given reference.
      *
      * @param string $var The item to be moved into the temporary test namespace.
@@ -111,14 +171,27 @@ class Runkit
     }
 
     /**
+     * Prefix the given reference.
+     *
+     * @param string $var The item to be given the temporary test prefix.
+     *
+     * @return string The newly-namespaced item.
+     */
+    public static function makePrefixed($var)
+    {
+        return self::getPrefix() . str_replace('\\', '_', $var);
+    }
+
+    /**
      * Reset static properties.
      *
-     * This is helpful to run before tests in case self::$namespace gets polluted.
+     * This is helpful to run before tests in case self::$namespace or self::$prefix get polluted.
      *
      * @return void
      */
     public static function reset()
     {
         self::$namespace = '';
+        self::$prefix    = '';
     }
 }

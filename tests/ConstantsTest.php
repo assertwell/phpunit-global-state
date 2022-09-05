@@ -67,6 +67,9 @@ class ConstantsTest extends TestCase
     /**
      * @test
      * @testdox setConstant() should throw an exception if it cannot redefine a constant
+     *
+     * This test is only relevant for PHP < 8.1, as 8.1 added support for objects being assigned to constants.
+     * @requires PHP < 8.1
      */
     public function setConstant_should_throw_an_exception_if_it_cannot_redefine_a_constant()
     {

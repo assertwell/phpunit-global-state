@@ -2,8 +2,6 @@
 
 namespace Tests;
 
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
-
 /**
  * Tests to ensure that state may be set in PHPUnit fixtures.
  *
@@ -13,8 +11,6 @@ use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
  */
 class FixtureTest extends TestCase
 {
-    use SetUpTearDownTrait;
-
     /**
      * @var array<string>
      */
@@ -23,7 +19,7 @@ class FixtureTest extends TestCase
         'FIXTURE_SETUP_GLOBAL',
     ];
 
-    public function doSetUp()
+    public function setUp()
     {
         parent::setUp();
 

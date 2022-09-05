@@ -8,6 +8,8 @@ use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
  * Tests to ensure that state may be set in PHPUnit fixtures.
  *
  * @ticket https://github.com/assertwell/phpunit-global-state/issues/14
+ *
+ * @covers nothing
  */
 class FixtureTest extends TestCase
 {

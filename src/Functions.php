@@ -11,7 +11,7 @@ trait Functions
     /**
      * All functions being handled by this trait.
      *
-     * @var array[]
+     * @var array{defined:Array<string>,redefined:Array<string,string>}
      */
     private $functions = [
         'defined'   => [],
@@ -66,10 +66,6 @@ trait Functions
                 $name,
                 get_class($this)
             ));
-        }
-
-        if (! Runkit::isAvailable()) {
-            $this->markTestSkipped('defineFunction() requires Runkit be available, skipping.');
         }
 
         if (! Runkit::function_add($name, $closure)) {

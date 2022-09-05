@@ -2,17 +2,15 @@
 
 namespace Tests;
 
-use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
-
 /**
  * Tests to ensure that state may be set in PHPUnit fixtures.
  *
  * @ticket https://github.com/assertwell/phpunit-global-state/issues/14
+ *
+ * @covers nothing
  */
 class FixtureTest extends TestCase
 {
-    use SetUpTearDownTrait;
-
     /**
      * @var array<string>
      */
@@ -21,7 +19,7 @@ class FixtureTest extends TestCase
         'FIXTURE_SETUP_GLOBAL',
     ];
 
-    public function doSetUp()
+    public function setUp()
     {
         parent::setUp();
 

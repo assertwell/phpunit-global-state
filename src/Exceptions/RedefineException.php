@@ -6,5 +6,4 @@ use PHPUnit\Framework\AssertionFailedError;
 
 class RedefineException extends AssertionFailedError
 {
-
 }

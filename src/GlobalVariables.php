@@ -5,7 +5,7 @@ namespace AssertWell\PHPUnitGlobalState;
 trait GlobalVariables
 {
     /**
-     * @var array[]
+     * @var array{created:Array<string>,updated:Array<string,mixed>}
      */
     private $globalVariables = [
         'created' => [],

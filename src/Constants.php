@@ -10,7 +10,7 @@ trait Constants
     /**
      * All constants being handled by this trait.
      *
-     * @var array[]
+     * @var array{created:Array<string>,updated:Array<string,mixed>}
      */
     private $constants = [
         'created' => [],

@@ -10,13 +10,8 @@ parameters:
     ignoreErrors:
         # Don't require return type hinting in tests.
         -
-            message: '#Method \S+ has no return typehint specified\.#'
+            message: '#Method \S+ has no return type specified\.#'
             path: tests/*
-
-        # Strings are a valid callable type.
-        -
-            message: '#Parameter \#1 \S+ of function call_user_func_array expects callable\(\): mixed, string given\.#'
-            path: src/Support/Runkit.php
 
         # Dynamically-defined functions.
         -
